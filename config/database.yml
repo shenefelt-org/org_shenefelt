@@ -1,0 +1,29 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: rails_user
+  password: "brianna-beale-REASON-preston"  # Replace with your actual database password
+  host: 127.0.0.1
+
+development:
+  <<: *default
+  database: shenefelt_production
+
+test:
+  <<: *default
+  database: shenefelt_test
+
+production:
+  primary:
+    <<: *default
+    database: shenefelt_production
+  cache:
+    <<: *default
+    database: shenefelt_production
+  queue:
+    <<: *default
+    database: shenefelt_production
+  cable:
+    <<: *default
+    database: shenefelt_production
