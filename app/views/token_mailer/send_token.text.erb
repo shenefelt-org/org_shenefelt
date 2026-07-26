@@ -1,3 +1,8 @@
-Token#send_token
+Hello,
 
-<%= @greeting %>, find me in app/views/token_mailer/send_token.text.erb
+Here is your requested Bearer token:
+
+<%= @token %>
+
+Use this in your HTTP Authorization header:
+Authorization: Bearer <%= @token %>

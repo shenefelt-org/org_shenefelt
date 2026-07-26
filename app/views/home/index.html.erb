@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard - Shenefelt</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #0f1016; color: #e2e8f0; }
+    .card { background: #181926; padding: 2.5rem; border-radius: 12px; width: 420px; border: 1px solid #313244; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.2); }
+    h2 { margin-top: 0; color: #818cf8; font-size: 1.6rem; }
+    p { color: #c7d2fe; line-height: 1.5; }
+    .user-badge { background: #0f1016; border: 1px solid #4338ca; padding: 10px 14px; border-radius: 6px; font-family: monospace; color: #a5b4fc; margin: 15px 0; word-break: break-all; }
+    .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .btn { display: block; text-align: center; padding: 12px; background: #6366f1; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.2s; }
+    .btn:hover { background: #4f46e5; }
+    .btn-secondary { background: #313244; color: #c7d2fe; border: 1px solid #4338ca; }
+    .btn-secondary:hover { background: #4338ca; color: #fff; }
+    .logout-form { margin-top: 15px; text-align: center; }
+    .logout-btn { background: none; border: none; color: #f87171; cursor: pointer; font-size: 0.85rem; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>👋 Welcome Back!</h2>
+    <p>You are logged in as:</p>
+    <div class="user-badge"><%= @user&.email_address %></div>
+
+    <div class="nav-links">
+      <a href="/files" class="btn">📁 Access Protected Files</a>
+      <a href="/token" class="btn btn-secondary">🔑 Generate API Bearer Token</a>
+    </div>
+
+    <div class="logout-form">
+      <%= button_to "Log Out", session_path, method: :delete, class: "logout-btn" %>
+    </div>
+  </div>
+</body>
+</html>

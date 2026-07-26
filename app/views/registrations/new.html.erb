@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up - Shenefelt</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #0f1016; color: #e2e8f0; }
+    .card { background: #181926; padding: 2.5rem; border-radius: 12px; width: 360px; border: 1px solid #313244; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.2); }
+    h2 { margin-top: 0; color: #818cf8; font-size: 1.5rem; }
+    label { display: block; font-size: 0.85rem; color: #c7d2fe; margin-top: 14px; margin-bottom: 6px; }
+    input[type="email"], input[type="password"] { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #4338ca; background: #0f1016; color: #fff; box-sizing: border-box; font-size: 0.95rem; outline: none; }
+    input[type="email"]:focus, input[type="password"]:focus { border-color: #818cf8; box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25); }
+    input[type="submit"] { width: 100%; margin-top: 22px; padding: 12px; background: #6366f1; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
+    input[type="submit"]:hover { background: #4f46e5; }
+    .login-link { display: block; text-align: center; margin-top: 1.2rem; color: #818cf8; font-size: 0.85rem; text-decoration: none; }
+    .login-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Create Account</h2>
+
+    <%= form_with url: signup_path, data: { turbo: false } do |f| %>
+      <%= f.label :email_address, "Email Address" %>
+      <%= f.email_field :email_address, required: true, autofocus: true, placeholder: "you@shenefelt.cc" %>
+
+      <%= f.label :password, "Password" %>
+      <%= f.password_field :password, required: true, placeholder: "••••••••" %>
+
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation, required: true, placeholder: "••••••••" %>
+
+      <%= f.submit "Sign Up" %>
+    <% end %>
+
+    <a href="/login" class="login-link">Already have an account? Log in &rarr;</a>
+  </div>
+</body>
+</html>
