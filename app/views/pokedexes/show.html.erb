@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pokedex %>
+
+<div>
+  <%= link_to "Edit this pokedex", edit_pokedex_path(@pokedex) %> |
+  <%= link_to "Back to pokedexes", pokedexes_path %>
+
+  <%= button_to "Destroy this pokedex", @pokedex, method: :delete %>
+</div>

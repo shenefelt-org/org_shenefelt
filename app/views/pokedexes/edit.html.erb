@@ -1,0 +1,12 @@
+<% content_for :title, "Editing pokedex" %>
+
+<h1>Editing pokedex</h1>
+
+<%= render "form", pokedex: @pokedex %>
+
+<br>
+
+<div>
+  <%= link_to "Show this pokedex", @pokedex %> |
+  <%= link_to "Back to pokedexes", pokedexes_path %>
+</div>

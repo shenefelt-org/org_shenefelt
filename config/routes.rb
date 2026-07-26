@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pokedexes
+  resources :pokemons
   get "home/index"
   # Health Check
   get "up" => "rails/health#show", as: :rails_health_check

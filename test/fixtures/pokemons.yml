@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  game_idx: 
+  url: MyString
+  sprite_url: MyString
+  cry_url: MyString
+
+two:
+  name: MyString
+  game_idx: 
+  url: MyString
+  sprite_url: MyString
+  cry_url: MyString
