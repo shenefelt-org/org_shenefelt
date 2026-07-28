@@ -1,4 +1,5 @@
 class Pokemon < ApplicationRecord
+  has_one :evolution_chain, dependent: :destroy
   serialize :game_idx, coder: JSON
   serialize :sprite_url, coder: JSON
 

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  evolves_to: MyString
+  evolves_from: MyString
+  pokemons: one
+
+two:
+  evolves_to: MyString
+  evolves_from: MyString
+  pokemons: two

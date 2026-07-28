@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :evolution_chains
   resources :pokedexes
   resources :pokemons
   get "home/index"

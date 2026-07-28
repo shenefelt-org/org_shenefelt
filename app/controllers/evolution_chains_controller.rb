@@ -1,0 +1,2 @@
+class EvolutionChainsController < ApplicationController
+end
