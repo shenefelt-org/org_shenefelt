@@ -73,3 +73,9 @@ end
 gem 'dotenv-rails'
 gem 'redis'
 gem 'httparty'
+# Gemfile
+gem "devise"
+gem "omniauth"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth_openid_connect"
+gem "aws-sdk-s3", require: false

@@ -1,20 +1,32 @@
 Rails.application.routes.draw do
+  resources :files, only: %i[index] do
+    get :download, on: :collection
+  end
   resources :evolution_chains
   resources :pokedexes
   resources :pokemons
   get "home/index"
+
+
   # Health Check
   get "up" => "rails/health#show", as: :rails_health_check
+
+  match "/auth/openid_connect",
+      to: "sso#start",
+      via: [:get, :post],
+      as: :openid_connect
+
+  get  "/auth/openid_connect/callback",       to: "sso#callback"
+  post "/auth/openid_connect/callback",       to: "sso#callback"
+
+  # Authentik is currently sending users here NEVER DELETE THIS LINE OR SSO IS GONE
+  get  "/users/auth/openid_connect/callback", to: "sso#callback"
+  post "/users/auth/openid_connect/callback", to: "sso#callback"
 
   # Token Generation Routes
   get  "/token", to: "token#new", as: :token
   post "/token", to: "token#create"
 
-  # Protected Files Portal
-  get    "/files",           to: "files#index",    as: :files
-  post   "/files/login",     to: "files#login",    as: :files_login
-  delete "/files/logout",    to: "files#logout",   as: :files_logout
-  get    "/files/:filename", to: "files#download", as: :file_download, constraints: { filename: /[^\/]+/ }
 
   # Platform Sign Up / Registration
   get  "/signup", to: "registrations#new", as: :signup

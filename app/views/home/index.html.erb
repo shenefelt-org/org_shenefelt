@@ -3,33 +3,128 @@
 <head>
   <title>Dashboard - Shenefelt</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #0f1016; color: #e2e8f0; }
-    .card { background: #181926; padding: 2.5rem; border-radius: 12px; width: 420px; border: 1px solid #313244; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.2); }
-    h2 { margin-top: 0; color: #818cf8; font-size: 1.6rem; }
-    p { color: #c7d2fe; line-height: 1.5; }
-    .user-badge { background: #0f1016; border: 1px solid #4338ca; padding: 10px 14px; border-radius: 6px; font-family: monospace; color: #a5b4fc; margin: 15px 0; word-break: break-all; }
-    .nav-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-    .btn { display: block; text-align: center; padding: 12px; background: #6366f1; color: white; text-decoration: none; border-radius: 6px; font-weight: 600; transition: background 0.2s; }
-    .btn:hover { background: #4f46e5; }
-    .btn-secondary { background: #313244; color: #c7d2fe; border: 1px solid #4338ca; }
-    .btn-secondary:hover { background: #4338ca; color: #fff; }
-    .logout-form { margin-top: 15px; text-align: center; }
-    .logout-btn { background: none; border: none; color: #f87171; cursor: pointer; font-size: 0.85rem; text-decoration: underline; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #F8F9FE;
+      color: #2D2B4A;
+    }
+
+    .card {
+      background: #FFFFFF;
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid #EAEFFC;
+      box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+      box-sizing: border-box;
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: #4C4682;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: #7973A8;
+      font-size: 0.875rem;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .user-badge {
+      background: #F0F2FC;
+      border: 1px solid #E0E3F6;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.825rem;
+      color: #4C4682;
+      margin-bottom: 1.5rem;
+      word-break: break-all;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 0.65rem 1.15rem;
+      background: #685FD6;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .btn:hover {
+      background: #554CBF;
+    }
+
+    .btn-secondary {
+      background: #EEF0FD;
+      color: #685FD6;
+    }
+
+    .btn-secondary:hover {
+      background: #685FD6;
+      color: #FFFFFF;
+    }
+
+    .logout-form {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .logout-form form {
+      display: inline;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: #8C87B3;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0;
+      font: inherit;
+      transition: color 0.2s ease;
+    }
+
+    .logout-btn:hover {
+      color: #685FD6;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>👋 Welcome Back!</h2>
-    <p>You are logged in as:</p>
-    <div class="user-badge"><%= @user&.email_address %></div>
+    <p>user:</p>
+    <div class="user-badge"><%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %></div>
 
     <div class="nav-links">
-      <a href="/files" class="btn">📁 Access Protected Files</a>
-      <a href="/token" class="btn btn-secondary">🔑 Generate API Bearer Token</a>
+      <a href="/files" class="btn">R2 Cloud Object Storage (sad-wig)</a>
+      <!-- <a href="/token" class="btn btn-secondary">Generate API Bearer Token</a> -->
     </div>
 
     <div class="logout-form">
-      <%= button_to "Log Out", session_path, method: :delete, class: "logout-btn" %>
+      <%= button_to "Log Out", logout_path, method: :delete, class: "logout-btn" %>
     </div>
   </div>
 </body>

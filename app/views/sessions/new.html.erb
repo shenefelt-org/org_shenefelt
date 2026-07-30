@@ -1,44 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Log In - Shenefelt</title>
+  <title>Sign In - Shenefelt</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #0f1016; color: #e2e8f0; }
-    .card { background: #181926; padding: 2.5rem; border-radius: 12px; width: 360px; border: 1px solid #313244; box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.2); }
-    h2 { margin-top: 0; color: #818cf8; font-size: 1.5rem; }
-    label { display: block; font-size: 0.85rem; color: #c7d2fe; margin-top: 14px; margin-bottom: 6px; }
-    input[type="email"], input[type="password"] { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #4338ca; background: #0f1016; color: #fff; box-sizing: border-box; font-size: 0.95rem; outline: none; }
-    input[type="email"]:focus, input[type="password"]:focus { border-color: #818cf8; box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25); }
-    input[type="submit"] { width: 100%; margin-top: 22px; padding: 12px; background: #6366f1; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: background 0.2s; }
-    input[type="submit"]:hover { background: #4f46e5; }
-    .links { display: flex; justify-content: space-between; margin-top: 1.2rem; font-size: 0.85rem; }
-    .links a { color: #818cf8; text-decoration: none; }
-    .links a:hover { text-decoration: underline; }
-    .alert { background: #451225; color: #f87171; border: 1px solid #881337; padding: 10px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 15px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #F8F9FE;
+      color: #2D2B4A;
+    }
+
+    .login-card {
+      background: #FFFFFF;
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 380px;
+      border: 1px solid #EAEFFC;
+      box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .login-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #4C4682;
+      margin: 0 0 0.35rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .login-subtitle {
+      color: #7973A8;
+      font-size: 0.875rem;
+      margin: 0 0 1.75rem 0;
+    }
+
+    .flash-message {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+
+    .flash-alert {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid #FCA5A5;
+    }
+
+    .flash-notice {
+      background: #EEF0FD;
+      color: #4C4682;
+      border: 1px solid #C7D2FE;
+    }
+
+    .btn-sso {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #685FD6;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      text-decoration: none;
+      box-sizing: border-box;
+      transition: background 0.2s ease;
+    }
+
+    .btn-sso:hover {
+      background: #554CBF;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h2>Welcome Back</h2>
+  <div class="login-card">
+    <h1 class="login-title">Sign In</h1>
+    <p class="login-subtitle">Validate with SSO</p>
 
-    <% if flash[:alert] %>
-      <div class="alert"><%= flash[:alert] %></div>
+    <% if flash[:alert].present? %>
+      <p class="flash-message flash-alert"><%= flash[:alert] %></p>
+    <% end %>
+    <% if flash[:notice].present? %>
+      <p class="flash-message flash-notice"><%= flash[:notice] %></p>
     <% end %>
 
-    <%= form_with url: session_path, data: { turbo: false } do |f| %>
-      <%= f.label :email_address, "Email Address" %>
-      <%= f.email_field :email_address, required: true, autofocus: true, value: params[:email_address], placeholder: "you@shenefelt.cc" %>
-
-      <%= f.label :password, "Password" %>
-      <%= f.password_field :password, required: true, placeholder: "••••••••" %>
-
-      <%= f.submit "Log In" %>
-    <% end %>
-
-    <div class="links">
-      <a href="/signup">Need an account?</a>
-      <a href="<%= new_password_path %>">Forgot password?</a>
-    </div>
+    <%= link_to "SSO Auth Gateway", openid_connect_path, class: "btn-sso", data: { turbo: false } %>
   </div>
 </body>
 </html>
