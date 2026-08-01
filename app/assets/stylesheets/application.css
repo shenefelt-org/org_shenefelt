@@ -7,4 +7,10 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
+
+ 
  */
+
+ body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+ }

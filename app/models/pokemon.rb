@@ -1,5 +1,6 @@
 class Pokemon < ApplicationRecord
   has_one :evolution_chain, dependent: :destroy
+  has_one :pokedex, dependent: :destroy, foreign_key: :pokemons_id, class_name: "Pokedex"
   serialize :game_idx, coder: JSON
   serialize :sprite_url, coder: JSON
 
@@ -15,4 +16,7 @@ class Pokemon < ApplicationRecord
 
     game_idx.map { |g| "#{g['version']} => pkmn_id: #{g['game_index']}" }
   end
+
+
+
 end

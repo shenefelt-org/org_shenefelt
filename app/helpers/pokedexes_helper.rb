@@ -1,24 +1,76 @@
 module PokedexesHelper
     @endpoint = "https://pokeapi.co/api/v2/pokemon-species/"
 
-    def get_entries
-        return nil if Pokemon.count == 0
+    def get_national_dex_numbers
+        return nil if Pokemon.all.count.zero?
+        poke = Pokemon.all
+
+        poke.each do |p|
+
+            call = HTTParty.get("#{@endpoint}#{p.name}")
+            next if !call.success?
+
+            node = call.parsed_response.dig("pokedex_numbers", 0, "entry_number")
+            next if node.nil?
+  
+            puts pastel.yellow("#{node} => #{p.name}\n")
+
+            p.update!(
+                game_idx: node
+            )
+
+            sleep 0.5
+        end
+    end
+
+    def get_pokedex_entry_text
+        pastel = Pastel.new
+
+        if Pokemon.all.count.zero?
+            puts pastel.red("No pokemon found in the database. Please run rake db:seed to populate the database with pokemon data.")
+            return nil
+        end
         poke = Pokemon.all 
 
         poke.each do |p|
-            call = HTTParty.get("#{@endpoint}#{p.name}")
-            return nil unless call.success?
-            res = call.parsed_response
-
-            res["results"].each do |val|
-                #parse pout data and make new dex
-                Pokedex.create!(
-                    
-                )
-                p << val # establish relation
+            if Pokedex.exists?(pokemons_id: p.id)
+                puts pastel.yellow("Pokedex entry already exists for #{p.name}. Skipping.")
+                next
             end
+            call = HTTParty.get("#{@endpoint}#{p.name}")
+            next if !call.success? # I anticipate some of these will fail due to mega evo and x evo
+            p_res = call.parsed_response
+
+            puts pastel.green("Creating pokedex entry for #{p.name}.")
+
+            # use squish to parse out the \n from the json entry
+            flavor_text = p_res.dig("flavor_text_entries", 0, "flavor_text")&.squish
+            version_name = p_res.dig("flavor_text_entries", 0, "version", "name")&.squish
+            next if flavor_text.blank? || version_name.blank?
+
+            Pokedex.create!(
+                flavor_text: flavor_text,
+                pokemons_id: p.id,
+                version_name: version_name
+            )
+
+            puts pastel.green("Pokedex entry created for #{p.name}.\n\n")
+            sleep 0.5
         end
-        call = HTTParty.get("#{@endpoint}#{}")
     end
+
+    # test methods
+    def test_dex_grab(pokemon: nil)
+        return nil if pokemon.nil?
+
+        call = HTTParty.get("#{@endpoint}#{pokemon.name}")
+        p_res = call.parsed_response
+        puts pastel.cyan(p_res.dig("flavor_text_entries", 0, "flavor_text"))
+        puts pastel.cyan(p_res.dig("flavor_text_entries", 0, "version", "name"))
+    end
+
+    
+
+
 
 end

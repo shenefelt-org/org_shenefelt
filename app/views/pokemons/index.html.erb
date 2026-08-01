@@ -1,16 +1,200 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Pokemons" %>
 
-<h1>Pokemons</h1>
+<style>
+  .files-wrapper {
+    max-width: 800px;
+    margin: 3rem auto;
+    font-family: 'Menlo', monospace, 'Courier New', Courier, monospace;
+    color: #2D2B4A;
+  }
 
-<div id="pokemons">
-  <% @pokemons.each do |pokemon| %>
-    <%= render pokemon %>
-    <p>
-      <%= link_to "Show this pokemon", pokemon %>
-    </p>
+  .flash-message {
+    background: #F0F2FC;
+    border: 1px solid #E0E3F6;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    color: #4C4682;
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  .files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .files-title {
+    margin: 0;
+    color: #4C4682;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-btn {
+    display: inline-block;
+    padding: 0.65rem 1.15rem;
+    background: #685FD6;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .nav-btn:hover {
+    background: #554CBF;
+  }
+
+  .table-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    overflow: hidden; /* Ensures the table respects the border-radius */
+    margin-bottom: 1rem;
+  }
+
+  .files-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .files-table th {
+    background: #F8F9FE;
+    color: #7973A8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #EAEFFC;
+    font-weight: 600;
+  }
+
+  .files-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #EAEFFC;
+    color: #2D2B4A;
+    font-size: 0.9rem;
+  }
+
+  .files-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .action-btn {
+    display: inline-block;
+    background: #EEF0FD;
+    color: #685FD6;
+    text-decoration: none;
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .action-btn:hover {
+    background: #685FD6;
+    color: #FFFFFF;
+  }
+
+  .meta-count {
+    color: #7973A8;
+    font-size: 0.875rem;
+    text-align: right;
+    padding: 0 0.5rem;
+  }
+
+  .empty-state {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #7973A8;
+    font-size: 0.95rem;
+  }
+
+  .empty-state .nav-btn {
+    margin-top: 1.5rem;
+  }
+</style>
+
+<% if policy(Pokemon).show_edit? %>
+  <div class="flash-message flash-notice">
+    <p>Super Admin <%= current_user&.email %></p>
+  </div>
+<% else %>
+  <div class="flash-message flash-notice">
+    <p>You are a regular user. You can view pokemons but cannot edit them.</p>
+  </div>
+<% end %>
+
+<div class="files-wrapper">
+  
+  <%# Styled Flash Notice %>
+  <% if notice.present? %>
+    <div class="flash-message flash-notice">
+      <%= notice %>
+    </div>
   <% end %>
-</div>
 
-<%= link_to "New pokemon", new_pokemon_path %>
+  <%# Header Section %>
+  <div class="files-header">
+    <h1 class="files-title">Pokemons</h1>
+    
+    <div class="header-nav">
+      <%= link_to "New Pokemon", new_pokemon_path, class: "nav-btn nav-btn-home" %>
+    </div>
+  </div>
+
+  <%# Content Section %>
+  <div id="pokemons">
+    <% if @pokemons.any? %>
+      
+      <div class="table-card">
+        <table class="files-table">
+          <thead>
+            <tr>
+              <th>Pokemon Details</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @pokemons.each do |pokemon| %>
+              <tr>
+                <td>
+                  <%# Keeps your existing partial rendering %>
+                  <%= render pokemon %>
+                </td>
+                <td style="text-align: right;">
+                  <%= link_to "View Details", pokemon, class: "action-btn" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      
+      <%# Optional meta count using your CSS class %>
+      <div class="meta-count">
+        Showing <%= @pokemons.count %> pokemon
+      </div>
+
+    <% else %>
+      <%# Styled empty state if there are no records %>
+      <div class="empty-state">
+        <p>No pokemons have been caught yet.</p>
+        <%= link_to "Add First Pokemon", new_pokemon_path, class: "nav-btn nav-btn-home" %>
+      </div>
+    <% end %>
+  </div>
+</div>

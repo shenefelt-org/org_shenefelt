@@ -3,8 +3,8 @@ Rails.application.routes.draw do
     get :download, on: :collection
   end
   resources :evolution_chains
-  resources :pokedexes
-  resources :pokemons
+  resources :pokedexes, path: 'pokedex'
+  resources :pokemons, path: 'pokemon'
   get "home/index"
 
 

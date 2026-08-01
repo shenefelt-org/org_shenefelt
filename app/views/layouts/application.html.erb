@@ -25,6 +25,122 @@
   </head>
 
   <body>
+    <style>
+  .site-navbar {
+    background: #FFFFFF;
+    border-bottom: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+  }
+
+  .nav-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    color: #4C4682;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-brand:hover {
+    color: #685FD6;
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    color: #7973A8;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: #685FD6;
+  }
+
+  .nav-divider {
+    width: 1px;
+    height: 24px;
+    background: #EAEFFC;
+  }
+
+  .nav-user {
+    background: #F0F2FC;
+    border: 1px solid #E0E3F6;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+    font-size: 0.8rem;
+    color: #4C4682;
+  }
+
+  .nav-logout-btn {
+    background: none;
+    border: none;
+    color: #8C87B3;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0;
+    font: inherit;
+    transition: color 0.2s ease;
+  }
+
+  .nav-logout-btn:hover {
+    color: #685FD6;
+  }
+
+  .nav-logout-form {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<nav class="site-navbar">
+  <div class="nav-container">
+    <%# Left side: Brand / Logo %>
+    <%= link_to "Shenefelt", root_path, class: "nav-brand" %>
+
+    <%# Right side: Links and User Actions %>
+    <div class="nav-menu">
+      <%= link_to "Dashboard", root_path, class: "nav-link" %>
+      
+      <% if policy(:dashboard).view_pokedex_button? %>
+        <%= link_to "PokeAPI", pokemons_path, class: "nav-link" %>
+      <% end %>
+      
+      <%= link_to "Files", files_path, class: "nav-link" %>
+
+      <div class="nav-divider"></div>
+
+      <%# Assumes a user is logged in based on your previous snippet %>
+      <span class="nav-user">
+        <%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %>
+      </span>
+
+      <%= button_to "Log Out", logout_path, method: :delete, class: "nav-logout-btn", form_class: "nav-logout-form" %>
+    </div>
+  </div>
+</nav>
     <%= yield %>
   </body>
 </html>

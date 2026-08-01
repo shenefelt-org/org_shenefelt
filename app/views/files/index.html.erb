@@ -208,7 +208,13 @@
     <h1 class="files-title">Files</h1>
     <div class="header-nav">
       <%= link_to "Home", root_path, class: "nav-btn nav-btn-home" %>
-      <%= button_to "Log Out", logout_path, method: :delete, data: { turbo: false }, class: "nav-btn nav-btn-logout" %>
+      <%= button_to "Log Out",
+      logout_path,
+      method: :delete,
+      data: {
+        turbo: false,
+      },
+      class: "nav-btn nav-btn-logout" %>
     </div>
   </div>
 
@@ -220,7 +226,10 @@
   <% end %>
 
   <%= form_with url: files_path, method: :get, local: true, class: "filter-form" do %>
-    <%= text_field_tag :prefix, @prefix, placeholder: "optional/prefix/", class: "filter-input" %>
+    <%= text_field_tag :prefix,
+    @prefix,
+    placeholder: "optional/prefix/",
+    class: "filter-input" %>
     <%= submit_tag "Filter", class: "btn-filter" %>
   <% end %>
 
@@ -251,15 +260,18 @@
                 <%= link_to "Open", files_path(prefix: key), class: "action-btn" %>
               <% else %>
                 <%= link_to "Download",
-                            download_files_path(key: key),
-                            data: { turbo: false },
-                            class: "action-btn" %>
+                download_files_path(key: key),
+                data: {
+                  turbo: false,
+                },
+                class: "action-btn" %>
               <% end %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <p class="meta-count"><%= @files.size %> object(s)</p>
+    <p class="meta-count"><%= @files.size %>
+      files in /sad-wig</p>
   <% end %>
 </div>

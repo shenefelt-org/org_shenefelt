@@ -79,3 +79,6 @@ gem "omniauth"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth_openid_connect"
 gem "aws-sdk-s3", require: false
+gem "pundit", "~> 2.5"
+
+gem "pastel", "~> 0.8.0"

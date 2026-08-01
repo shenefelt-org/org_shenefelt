@@ -21,6 +21,7 @@ class PokemonsController < ApplicationController
 
   # POST /pokemons or /pokemons.json
   def create
+    
     @pokemon = Pokemon.new(pokemon_params)
 
     respond_to do |format|
