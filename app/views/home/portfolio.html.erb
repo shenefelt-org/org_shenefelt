@@ -1,0 +1,181 @@
+<% content_for :title, "Portfolio - Shenefelt" %>
+
+<style>
+  .main-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    padding: 2rem;
+    box-sizing: border-box;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+  }
+
+  .card {
+    background: #FFFFFF;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    box-sizing: border-box;
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    color: #4C4682;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    color: #7973A8;
+    font-size: 0.875rem;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .project-item {
+    background: #F8F9FE;
+    border: 1px solid #E0E3F6;
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.35rem;
+  }
+
+  .project-title {
+    color: #4C4682;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .project-link {
+    color: #685FD6;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .project-link:hover {
+    text-decoration: underline;
+  }
+
+  .project-desc {
+    color: #7973A8;
+    font-size: 0.8rem;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+  }
+
+  .tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    background: #F0F2FC;
+    border: 1px solid #E0E3F6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.725rem;
+    color: #4C4682;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    display: block;
+    text-align: center;
+    padding: 0.65rem 1.15rem;
+    background: #685FD6;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .btn:hover {
+    background: #554CBF;
+  }
+
+  .btn-secondary {
+    display: block;
+    text-align: center;
+    padding: 0.65rem 1.15rem;
+    background: #EEF0FD;
+    color: #685FD6;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .btn-secondary:hover {
+    background: #685FD6;
+    color: #FFFFFF;
+  }
+</style>
+
+<div class="main-content-wrapper">
+  <div class="card">
+    <h2>Projects</h2>
+    <p class="subtitle">selected applications & tools</p>
+
+    <!-- Project 1 -->
+    <div class="project-item">
+      <div class="project-header">
+        <h3 class="project-title">Cloud Storage Explorer</h3>
+        <a href="/files" class="project-link">View app &rarr;</a>
+      </div>
+      <p class="project-desc">R2 Cloud Object Storage browser built with S3 client integration and direct uploads.</p>
+      <div class="tag-container">
+        <span class="tag">Ruby on Rails</span>
+        <span class="tag">Cloudflare R2</span>
+        <span class="tag">ActiveStorage</span>
+      </div>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-item">
+      <div class="project-header">
+        <h3 class="project-title">Pokedex Data Engine</h3>
+        <a href="/pokemon" class="project-link">View app &rarr;</a>
+      </div>
+      <p class="project-desc">Pokemon stat tracking and query system built with RESTful endpoints and caching.</p>
+      <div class="tag-container">
+        <span class="tag">Rails 8</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Pundit</span>
+      </div>
+    </div>
+
+    
+
+    <div class="nav-links">
+      <a href="<%= new_contact_path %>" class="btn">Get In Touch</a>
+      <a href="/" class="btn-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>

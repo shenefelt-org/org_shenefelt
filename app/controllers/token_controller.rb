@@ -10,7 +10,7 @@ class TokenController < ApplicationController
     if @email.present?
       payload = { email: @email, exp: 24.hours.from_now.to_i }
       secret  = Rails.application.secret_key_base
-      token   = JWT.encode(payload, secret, 'HS256')
+      token   = JWT.encode(payload, secret, "HS256")
 
       TokenMailer.send_token(@email, token).deliver_now
     else

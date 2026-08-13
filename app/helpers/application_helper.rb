@@ -10,6 +10,4 @@ module ApplicationHelper
   }
 
   REDIS = Redis.new(host: red_cred[:host], port: red_cred[:port])
-
-  
 end

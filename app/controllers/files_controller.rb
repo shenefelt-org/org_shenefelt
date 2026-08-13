@@ -1,10 +1,12 @@
-# Designed to work with R2 Storage
-# SSO users should be able to view struct and download them
-# users shall not be able to upload or delete files from R2
-
 # frozen_string_literal: true
 
+# Designed to work with Cloudflare R2 Storage
+# All authenticated users can view and download files.
+# Only Admin users are authorized to upload or delete files.
 class FilesController < ApplicationController
+  before_action :require_admin!, only: %i[create upload destroy]
+
+  # GET /files
   def index
     @prefix = params[:prefix].to_s
     raw = fetch_r2_list(@prefix)
@@ -16,10 +18,11 @@ class FilesController < ApplicationController
     flash.now[:alert] = "Could not list files: #{e.class}: #{e.message}"
   end
 
+  # GET /files/download?key=...
   def download
     key = params[:key].to_s
-    return redirect_to(files_path, alert: "Missing file key") if key.blank?
-    return redirect_to(files_path, alert: "Invalid file key") if key.include?("..") || key.start_with?("/")
+    return redirect_to(files_path, alert: "Missing file key.") if key.blank?
+    return redirect_to(files_path, alert: "Invalid file key.") if key.include?("..") || key.start_with?("/")
 
     url = presigned_download_url(key)
     redirect_to url, allow_other_host: true
@@ -28,7 +31,51 @@ class FilesController < ApplicationController
     redirect_to files_path, alert: "Download failed: #{e.message}"
   end
 
+  # POST /files or POST /files/upload
+  def create
+    file = params[:file] || Array(params[:files]).first
+    return redirect_to(files_path, alert: "Please select a file to upload.") if file.blank?
+
+    key = params[:key].to_s.presence || file.original_filename
+
+    r2_client.put_object(
+      bucket: r2_bucket,
+      key: key,
+      body: file.tempfile,
+      content_type: file.content_type
+    )
+
+    redirect_to files_path, notice: "File '#{key}' uploaded successfully."
+  rescue => e
+    Rails.logger.error("[R2] upload #{e.class}: #{e.message}")
+    redirect_to files_path, alert: "Upload failed: #{e.message}"
+  end
+  alias_method :upload, :create
+
+  # DELETE /files/destroy?key=...
+  def destroy
+    key = params[:key].to_s
+    return redirect_to(files_path, alert: "Missing file key.") if key.blank?
+    return redirect_to(files_path, alert: "Invalid file key.") if key.include?("..") || key.start_with?("/")
+
+    r2_client.delete_object(
+      bucket: r2_bucket,
+      key: key
+    )
+
+    redirect_to files_path, notice: "File '#{key}' deleted successfully."
+  rescue => e
+    Rails.logger.error("[R2] Delete error: #{e.message}")
+    redirect_to files_path, alert: "Deletion failed: #{e.message}"
+  end
+
   private
+
+  def require_admin!
+    unless current_user&.admin?
+      redirect_to files_path, alert: "You are not authorized to modify files."
+    end
+  end
 
   def fetch_r2_list(prefix)
     if R2ServiceHelper.respond_to?(:list_objects)
@@ -94,7 +141,6 @@ class FilesController < ApplicationController
   end
 
   def r2_client
-    # Prefer helper if it already exposes a client
     if R2ServiceHelper.respond_to?(:client)
       return R2ServiceHelper.client
     end
@@ -126,7 +172,6 @@ class FilesController < ApplicationController
   end
 
   def presigned_download_url(key, expires_in: 15.minutes)
-    # Prefer helper methods if you already have them
     if R2ServiceHelper.respond_to?(:presigned_url)
       return R2ServiceHelper.presigned_url(key, expires_in: expires_in.to_i)
     end
@@ -147,7 +192,6 @@ class FilesController < ApplicationController
 
   def content_disposition_for(key)
     filename = File.basename(key)
-    # forces download with a sensible filename in the browser
     "attachment; filename=\"#{filename.gsub('"', '')}\""
   end
 end

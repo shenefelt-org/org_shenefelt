@@ -70,9 +70,9 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'dotenv-rails'
-gem 'redis'
-gem 'httparty'
+gem "dotenv-rails"
+gem "redis"
+gem "httparty"
 # Gemfile
 gem "devise"
 gem "omniauth"
@@ -82,3 +82,12 @@ gem "aws-sdk-s3", require: false
 gem "pundit", "~> 2.5"
 
 gem "pastel", "~> 0.8.0"
+
+gem "pry-rails", "~> 0.3.11"
+gem "rubocop-rails", "~> 2.36"
+
+gem "rspec", "~> 3.13"
+gem "factory_bot", "~> 6.6"
+gem "avo", "~> 4.0"
+
+gem "nokogiri", "~> 1.19"

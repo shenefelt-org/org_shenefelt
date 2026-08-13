@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_action :require_authentication # push u to auth sso
-  
+
   def new
     @user = User.new
-    # GS Auth pundit  
-    authorize @user 
+    # GS Auth pundit
+    authorize @user
   end
 
   def create

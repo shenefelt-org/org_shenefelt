@@ -8,5 +8,4 @@ class Pokedex < ApplicationRecord
   def previous
     Pokedex.where("id < ?", id).order(id: :desc).first
   end
-  
 end

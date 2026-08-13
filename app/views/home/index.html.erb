@@ -117,11 +117,23 @@
     <div class="user-badge"><%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %></div>
 
     <div class="nav-links">
-      <a href="/files" class="btn">R2 Cloud Object Storage (sad-wig)</a>
-      <!-- <a href="/token" class="btn btn-secondary">Generate API Bearer Token</a> -->
-       <% if policy(:dashboard).view_pokedex_button? %>
+      <% if policy(:dashboard).view_r2_storage_button? %>
+        <a href="/files" class="btn">R2 Cloud Object Storage (sad-wig)</a>
+      <% end %>
+
+      <% if policy(:dashboard).view_pokedex_button? %>
         <a href="/pokemons" class="btn btn-secondary">View Pokemon</a>
       <% end %>
+
+      <a href="/pokedex/1285" class="btn btn-secondary">View Pokedex</a>
+      
+      <!-- Added Contact Us Link -->
+      <a href="<%= new_contact_path %>" class="btn btn-secondary">Contact Me</a>
+
+      <a href="/portfolio" class= "btn btn-secondary">Portfolio</a>
+
+      <a href="https://github.com/greg0rys" class= "btn btn-secondary">GitHub</a>
+
     </div>
 
     <div class="logout-form">

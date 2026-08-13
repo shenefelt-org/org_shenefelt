@@ -1,0 +1,35 @@
+<%# Load Tailwind CSS CDN %>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="max-w-6xl mx-auto my-10 px-4 font-mono">
+  
+  <%# Header & Action Bar %>
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#EAEFFC]">
+    <div>
+      <h1 class="text-2xl font-semibold text-[#4C4682] tracking-tight">Funko Collection</h1>
+      <p class="text-xs text-[#7973A8] mt-1">
+        Tracking <span class="font-bold text-[#685FD6]"><%= @funko_pops&.count || 0 %></span> collectibles in your vault.
+      </p>
+    </div>
+
+    <%= link_to "+ Add Funko Pop", new_funko_pop_path, class: "inline-flex items-center justify-center px-4 py-2.5 rounded-md bg-[#685FD6] hover:bg-[#4C4682] text-white text-xs font-medium transition shadow-sm" %>
+  </div>
+
+  <%# Collection Grid %>
+  <% if @funko_pops&.any? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <%= render @funko_pops %>
+    </div>
+  <% else %>
+    <%# Empty State %>
+    <div class="text-center py-16 px-4 bg-white rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+      <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-[#F0F2FC] border border-[#E0E3F6] flex items-center justify-center text-[#685FD6] font-bold text-lg">
+        #
+      </div>
+      <h3 class="text-sm font-semibold text-[#4C4682]">No Funko Pops Found</h3>
+      <p class="text-xs text-[#7973A8] mt-1 mb-6">Get started by adding your first pop to the collection.</p>
+      <%= link_to "Add Pop Now", new_funko_pop_path, class: "px-4 py-2 rounded-md bg-[#685FD6] hover:bg-[#4C4682] text-white text-xs font-medium transition" %>
+    </div>
+  <% end %>
+
+</div>

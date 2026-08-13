@@ -2,7 +2,6 @@ require "redis"
 require "httparty"
 
 module PokeBuild
-
   def get_pkmn_urls(redis: nil)
     call = HTTParty.get(ENV["pokeapi_base_url"])
     return nil unless call.success?
@@ -17,11 +16,9 @@ module PokeBuild
         name: poke["name"],
         url: poke["url"]
       )
-
     end
 
-    return true if Pokemon.count == response.size 
-
+    true if Pokemon.count == response.size
   end
 
   def add_to_hash(pokemon: nil)
@@ -61,7 +58,6 @@ module PokeBuild
     sleep 0.1
 
     puts "Cries loaded for: #{pokemon.name}"
-
   end
 
   def parse_sprites(pokemon: nil)

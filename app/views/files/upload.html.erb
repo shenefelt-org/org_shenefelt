@@ -1,0 +1,4 @@
+<%= form_with url: upload_files_path, method: :post, multipart: true, local: true do |f| %>
+  <%= f.file_field :file, required: true %>
+  <%= f.submit "Upload" %>
+<% end %>

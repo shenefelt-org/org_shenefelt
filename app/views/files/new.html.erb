@@ -1,0 +1,134 @@
+<% content_for :title, "Upload File - Shenefelt" %>
+
+<style>
+  .main-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    padding: 2rem;
+    box-sizing: border-box;
+    color: #2D2B4A;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .card {
+    background: #FFFFFF;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    box-sizing: border-box;
+  }
+
+  .form-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #EAEFFC;
+    padding-bottom: 1rem;
+  }
+
+  .form-title {
+    margin: 0;
+    color: #4C4682;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .field-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .card label {
+    display: block;
+    font-size: 0.875rem;
+    color: #4C4682;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .file-input {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #EAEFFC;
+    border-radius: 8px;
+    background: #F8F9FE;
+    color: #2D2B4A;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .file-input:focus {
+    outline: none;
+    border-color: #685FD6;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(104, 95, 214, 0.1);
+  }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.15rem;
+    background: #685FD6;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1.5rem;
+  }
+
+  .btn-submit:hover {
+    background: #554CBF;
+  }
+
+  .action-group {
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: #EEF0FD;
+    color: #685FD6;
+    text-decoration: none;
+    padding: 0.65rem 1.15rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    background: #685FD6;
+    color: #FFFFFF;
+  }
+</style>
+
+<div class="main-content-wrapper">
+  <div class="card">
+    <div class="form-header">
+      <h1 class="form-title">R2 Storage Upload</h1>
+    </div>
+
+    <%= form_with url: upload_files_path, multipart: true, local: true do |f| %>
+      <div class="field-group">
+        <%= f.label :file, "Choose a file to upload:" %>
+        <%= f.file_field :file, required: true, class: "file-input" %>
+      </div>
+
+      <%= f.submit "Upload to Cloudflare R2", class: "btn-submit" %>
+    <% end %>
+
+    <div class="action-group">
+      <%= link_to "Back to Files", files_path, class: "btn-secondary" %>
+    </div>
+  </div>
+</div>

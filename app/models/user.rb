@@ -31,5 +31,4 @@ class User < ApplicationRecord
   def admin?
     user_role == "admin"
   end
-  
 end

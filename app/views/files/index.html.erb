@@ -74,17 +74,32 @@
     background: #EEF0FD;
   }
 
+  .nav-btn-upload {
+    background: #EEF0FD;
+    color: #685FD6;
+    border: 1px solid #E0E3F6;
+    cursor: pointer;
+  }
+
+  .nav-btn-upload:hover {
+    background: #685FD6;
+    color: #FFFFFF;
+    border-color: #685FD6;
+  }
+
   .flash-message {
     padding: 0.75rem 1rem;
     border-radius: 8px;
     font-size: 0.875rem;
     margin-bottom: 1.25rem;
   }
+
   .flash-alert {
     background: #FEE2E2;
     color: #991B1B;
     border: 1px solid #FCA5A5;
   }
+
   .flash-notice {
     background: #EEF0FD;
     color: #4C4682;
@@ -178,11 +193,28 @@
     border-radius: 6px;
     text-decoration: none;
     transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
   }
 
   .action-btn:hover {
     background: #685FD6;
     color: #FFFFFF;
+  }
+
+  .delete-btn {
+    background: #FFF0F0;
+    color: #D32F2F;
+  }
+
+  .delete-btn:hover {
+    background: #D32F2F;
+    color: #FFFFFF;
+  }
+
+  .inline-form {
+    display: inline;
+    margin: 0;
   }
 
   .empty-state {
@@ -207,29 +239,23 @@
   <div class="files-header">
     <h1 class="files-title">Files</h1>
     <div class="header-nav">
-      <%= link_to "Home", root_path, class: "nav-btn nav-btn-home" %>
-      <%= button_to "Log Out",
-      logout_path,
-      method: :delete,
-      data: {
-        turbo: false,
-      },
-      class: "nav-btn nav-btn-logout" %>
+      <%= button_to "Upload", new_file_path, method: :get, class: "nav-btn nav-btn-upload" %>
     </div>
   </div>
 
   <% if flash[:alert].present? %>
     <p class="flash-message flash-alert"><%= flash[:alert] %></p>
   <% end %>
+
   <% if flash[:notice].present? %>
     <p class="flash-message flash-notice"><%= flash[:notice] %></p>
   <% end %>
 
   <%= form_with url: files_path, method: :get, local: true, class: "filter-form" do %>
     <%= text_field_tag :prefix,
-    @prefix,
-    placeholder: "optional/prefix/",
-    class: "filter-input" %>
+      @prefix,
+      placeholder: "optional/prefix/",
+      class: "filter-input" %>
     <%= submit_tag "Filter", class: "btn-filter" %>
   <% end %>
 
@@ -253,25 +279,32 @@
           <% folder = key.end_with?("/") %>
           <tr>
             <td><code class="key-code"><%= key %></code></td>
-            <td><%= f[:size].present? ? number_to_human_size(f[:size].to_i) : "—" %></td>
-            <td><%= f[:last_modified] || "—" %></td>
+            <td><%= f[:size].present? ? number_to_human_size(f[:size].to_i) : "-" %></td>
+            <td><%= f[:last_modified] || "-" %></td>
             <td style="text-align: right;">
               <% if folder %>
                 <%= link_to "Open", files_path(prefix: key), class: "action-btn" %>
               <% else %>
                 <%= link_to "Download",
-                download_files_path(key: key),
-                data: {
-                  turbo: false,
-                },
-                class: "action-btn" %>
+                  download_files_path(key: key),
+                  data: { turbo: false },
+                  class: "action-btn" %>
+              <% end %>
+
+              <% if policy(:files).view_delete_button? %>
+                <%= button_to "Delete",
+                  files_path(key: key),
+                  method: :delete,
+                  form: { class: "inline-form" },
+                  data: { turbo_confirm: "Are you sure you want to delete #{key}?" },
+                  class: "action-btn delete-btn" %>
               <% end %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
-    <p class="meta-count"><%= @files.size %>
-      files in /sad-wig</p>
+
+    <p class="meta-count"><%= @files.size %> files in /sad-wig</p>
   <% end %>
 </div>

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Authentication
   include Pundit::Authorization
-  
+
   # 1. ADD THIS LINE: It tells Rails that Pundit and your HTML views are allowed to use this method
   helper_method :current_user
 

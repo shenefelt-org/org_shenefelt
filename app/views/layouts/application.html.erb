@@ -122,17 +122,39 @@
 
     <%# Right side: Links and User Actions %>
     <div class="nav-menu">
-      <%= link_to "Dashboard", root_path, class: "nav-link" %>
-      
-      <% if policy(:dashboard).view_pokedex_button? %>
-        <%= link_to "PokeAPI", pokemons_path, class: "nav-link" %>
+      <% unless current_page?(root_path) %>
+        <%= link_to "Dashboard", root_path, class: "nav-link" %>
+      <% end %>
+
+      <% unless current_page?(pokemons_path) %>
+        <%= link_to "Pokemon Base Info", pokemons_path, class: "nav-link" %>
       <% end %>
       
-      <%= link_to "Files", files_path, class: "nav-link" %>
+      <% unless current_page?(pokedexes_path) %>
+        <%= link_to "Pokedex", pokedexes_path, class: "nav-link" %>
+      <% end %>
+
+      <% unless current_page?(ip_path) %>
+        <%= link_to "Public IP", ip_path, class: "nav-link" %>
+      <% end %>
+      
+      <% unless current_page?(portfolio_path) %>
+        <%= link_to "Portfolio", portfolio_path, class: "nav-link" %>
+      <% end %>
+      
+
+    
+      <!-- Hidden admin links via pundit policy -->
+      <% unless current_page?(files_path) %>
+        <% if policy(:files).view_files_button? %>
+          <%= link_to "Files", files_path, class: "nav-link" %>
+        <% end %>
+      <% end %>
+      
 
       <div class="nav-divider"></div>
 
-      <%# Assumes a user is logged in based on your previous snippet %>
+      <%# Assumes a user is logged in %>
       <span class="nav-user">
         <%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %>
       </span>

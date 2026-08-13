@@ -1,0 +1,156 @@
+<% content_for :title, "Contact Us - Shenefelt" %>
+
+<style>
+  /* Notice: No more body{} tag! We use a wrapper instead to center the card. */
+  .main-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    padding: 2rem;
+    box-sizing: border-box;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+  }
+
+  .card {
+    background: #FFFFFF;
+    padding: 2.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid #EAEFFC;
+    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
+    box-sizing: border-box;
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #4C4682;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: #7973A8;
+    font-size: 0.875rem;
+    margin: 0 0 1.25rem 0;
+  }
+
+  label {
+    display: block;
+    color: #4C4682;
+    font-size: 0.825rem;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  /* Uses your exact .user-badge styling for input fields */
+  .input-field {
+    width: 100%;
+    background: #F0F2FC;
+    border: 1px solid #E0E3F6;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+    font-size: 0.825rem;
+    color: #4C4682;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .input-field:focus {
+    border-color: #685FD6;
+  }
+
+  /* Uses your exact .btn styling */
+  .btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.65rem 1.15rem;
+    background: #685FD6;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
+    margin-top: 1.25rem;
+  }
+
+  .btn:hover {
+    background: #554CBF;
+  }
+
+  .flash-notice {
+    background: #EEF0FD;
+    border: 1px solid #E0E3F6;
+    color: #685FD6;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.825rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .error-list {
+    color: #D93838;
+    font-size: 0.825rem;
+    margin-bottom: 1rem;
+  }
+
+  .error-list ul {
+    margin: 0.25rem 0 0 0;
+    padding-left: 1.25rem;
+  }
+</style>
+
+<div class="main-content-wrapper">
+  <div class="card">
+    <h2>Say Hi!</h2>
+    
+
+    <% if notice %>
+      <div class="flash-notice"><%= notice %></div>
+    <% end %>
+
+    <%= form_with model: @contact, url: contacts_path do |f| %>
+      <% if @contact.errors.any? %>
+        <div class="error-list">
+          <ul>
+            <% @contact.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= f.label :name, "name" %>
+        <%= f.text_field :name, class: "input-field", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, "email" %>
+        <%= f.email_field :email, class: "input-field", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :message, "message" %>
+        <%= f.text_area :message, rows: 4, class: "input-field", required: true %>
+      </div>
+
+      <%= f.submit "Send Message", class: "btn" %>
+
+    <% end %>
+  </div>
+</div>

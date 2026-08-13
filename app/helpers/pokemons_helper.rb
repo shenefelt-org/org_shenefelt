@@ -1,8 +1,8 @@
 # this makes a large amount of queries on our api guys
 # we should bewary of running this at any other time than first unpack
 # I increased the threshold on our payload size to 1360 to get all the pokemon in one call (poke_x server)
-require 'httparty'
-require 'csv'
+require "httparty"
+require "csv"
 
 module PokemonsHelper
   @endpoints = {
@@ -10,7 +10,7 @@ module PokemonsHelper
     poke_info: "https://pokeapi.co/api/v2/pokemon/",
     pokedex_info: "https://pokeapi.co/api/v2/pokemon-species/",
     type: "https://pokeapi.co/api/v2/type",
-    item: "https://pokeapi.co/api/v2/item",
+    item: "https://pokeapi.co/api/v2/item"
   }
 
   # collect base info at intro endpoint speed calc O(n) = (log(n) - {sum})
@@ -21,11 +21,11 @@ module PokemonsHelper
     response = call.parsed_response
     return nil if response.size.zero?
 
-    res = response['results']
+    res = response["results"]
     return nil if res.empty?
 
     res.each do |poke|
-      name, url = poke['name'], poke['url']
+      name, url = poke["name"], poke["url"]
       puts "Creating #{name}\nURL: #{url}"
 
       node = Pokemon.create!(
@@ -40,7 +40,6 @@ module PokemonsHelper
 
       sleep 0.5
     end
-
   end
 
   # parse out idx national dex id i.e. grab national pokeid != game specific ids
@@ -54,7 +53,7 @@ module PokemonsHelper
 
       node = call.parsed_response["pokedex_numbers"][0]["entry_number"]
       next if node.nil?
-  
+
       puts "#{node} => #{poke.name}\n"
 
       poke.update!(
@@ -63,7 +62,6 @@ module PokemonsHelper
 
       sleep 0.5
     end
-
   end
 
   def assign_sprites!
@@ -82,9 +80,7 @@ module PokemonsHelper
       )
 
       sleep 0.5
-
     end
-
   end
 
   # only parse legacy cry disregard future forward cry data.
@@ -104,11 +100,9 @@ module PokemonsHelper
       )
 
       sleep 0.5
-
     end
 
     (Pokemon.where(cry_url: nil).size.zero?) ? (puts "All cries assigned!") : (puts "Some cries were not assigned! gathering data.")
-
   end
 
   # reset all id's game indx is not what I want assigned here tbh
@@ -116,7 +110,6 @@ module PokemonsHelper
     return nil if Pokemon.all.size.zero?
 
     Pokemon.all.each { |p| p.update!(game_idx: 0) }
-
   end
 
   # reset all sprite URLs
@@ -124,7 +117,6 @@ module PokemonsHelper
     return nil if Pokemon.all.size.zero?
 
     Pokemon.all.each { |p| p.update!(sprite_url: nil) }
-
   end
 
   # reset all cry URLs
@@ -140,26 +132,24 @@ module PokemonsHelper
     f_path = Rails.root.join("tmp", "pokemon_data.csv")
 
     CSV.open(f_path, "w") do |csv|
-      csv << ["Name", "Game Index", "URL", "Sprite URL", "Cry URL"]
+      csv << [ "Name", "Game Index", "URL", "Sprite URL", "Cry URL" ]
       Pokemon.all.each do |poke|
-        csv << [poke.name, poke.game_idx, poke.url, poke.sprite_url, poke.cry_url]
+        csv << [ poke.name, poke.game_idx, poke.url, poke.sprite_url, poke.cry_url ]
       end
     end
   end
 
-  #  
-  # run datum collection sequence 
+  #
+  # run datum collection sequence
   #
   def run_all
-    
     assign_national_dex_id! if collect_name_url!
     assign_sprites! if assign_national_dex_id!
     assign_cries! if assign_sprites!
-
   end
 
-  private 
-  
+  private
+
   def has_sprites?(pokemon: nil)
     return false if pokemon.nil?
     !pokemon.sprite_url.nil? && !pokemon.sprite_url.empty?
@@ -175,8 +165,4 @@ module PokemonsHelper
     return false if pokemon.nil?
     pokemon.cry_url.nil? || pokemon.cry_url.empty?
   end
-
-
-
-
 end

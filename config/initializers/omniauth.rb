@@ -8,7 +8,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   provider :openid_connect,
            name: :openid_connect,
-           scope: [:openid, :email, :profile],
+           scope: [ :openid, :email, :profile ],
            response_type: :code,
            discovery: true,
            uid_field: "sub",

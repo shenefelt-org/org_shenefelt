@@ -3,10 +3,9 @@ class SessionsController < ApplicationController
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_path, alert: "Try again later." }
 
   def new
-    
   end
 
-  # def and bind session sso portal 
+  # def and bind session sso portal
   def create
     if user = User.authenticate_by(params.permit(:email_address, :password))
       start_new_session_for user
@@ -14,10 +13,9 @@ class SessionsController < ApplicationController
     else
       redirect_to new_session_path, alert: "Try another email address or password."
     end
-
   end
 
-  # sso destroy
+# sso destroy
 def destroy
     # 1. Read token from Rails 8 DB session
     id_token = Current.session&.id_token
@@ -26,7 +24,7 @@ def destroy
     Current.session&.destroy
     cookies.delete(:session_id)
 
-    # invalidate Authentik session 
+    # invalidate Authentik session
     reset_session
 
     # 3. Construct Authentik logout URL with token hint
@@ -40,7 +38,4 @@ def destroy
     # 4. Redirect out
     redirect_to authentik_logout_url, allow_other_host: true, status: :see_other
   end
-  
-
-
 end

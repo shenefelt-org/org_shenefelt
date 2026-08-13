@@ -1,0 +1,55 @@
+<div class="bg-white rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)] p-5 flex flex-col justify-between hover:border-[#E0E3F6] transition">
+  
+  <div>
+    <%# Top Badges & Box Number %>
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <span class="text-xs font-bold text-[#685FD6] bg-[#F0F2FC] border border-[#E0E3F6] px-2.5 py-1 rounded-md">
+        #<%= funko_pop&.box_num.presence || "N/A" %>
+      </span>
+
+      <div class="flex items-center gap-1.5 flex-wrap justify-end">
+        <% if funko_pop&.limited_edition %>
+          <span class="text-[10px] uppercase font-semibold text-[#685FD6] bg-[#F0F2FC] px-2 py-0.5 rounded border border-[#E0E3F6]">
+            Limited
+          </span>
+        <% end %>
+
+        <% if funko_pop&.exclusive %>
+          <span class="text-[10px] uppercase font-semibold text-[#4C4682] bg-[#EAEFFC] px-2 py-0.5 rounded border border-[#E0E3F6]">
+            Exclusive
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <%# Pop Name %>
+    <h2 class="text-base font-semibold text-[#4C4682] line-clamp-1 mb-1">
+      <%= funko_pop&.name&.titleize || "Unnamed Pop" %>
+    </h2>
+
+    <%# Notes (Safe Rendered if Present) %>
+    <% if funko_pop&.note.present? %>
+      <p class="text-xs text-[#8C87B3] italic line-clamp-2 mb-4">
+        "<%= funko_pop&.note&.truncate(75) %>"
+      </p>
+    <% end %>
+  </div>
+
+  <%# Price Breakdown Footer %>
+  <div class="mt-4 pt-3 border-t border-[#EAEFFC] grid grid-cols-2 gap-2 text-xs">
+    <div>
+      <span class="block text-[10px] font-semibold text-[#7973A8] uppercase tracking-wider">Paid Cost</span>
+      <span class="font-medium text-[#4C4682]">
+        <%= funko_pop&.cost ? number_to_currency(funko_pop&.cost) : "—" %>
+      </span>
+    </div>
+
+    <div class="text-right">
+      <span class="block text-[10px] font-semibold text-[#7973A8] uppercase tracking-wider">Est. Value</span>
+      <span class="font-semibold text-[#685FD6]">
+        <%= funko_pop&.current_value ? number_to_currency(funko_pop&.current_value) : "—" %>
+      </span>
+    </div>
+  </div>
+
+</div>

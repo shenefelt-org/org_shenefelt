@@ -29,7 +29,7 @@ module R2ServiceHelper
         bucket: bucket,
         prefix: prefix.presence,
         continuation_token: token,
-        max_keys: [max_keys, 1000].min
+        max_keys: [ max_keys, 1000 ].min
       )
 
       resp.contents.each do |obj|
@@ -47,5 +47,15 @@ module R2ServiceHelper
     end
 
     objects.first(max_keys)
+  end
+
+  def self.delete_object(key)
+    client = self.client
+    bucket = self.bucket
+
+    client.delete_object(
+      bucket: bucket,
+      key: key
+    )
   end
 end
