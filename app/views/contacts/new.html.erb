@@ -1,132 +1,25 @@
 <% content_for :title, "Contact Us - Shenefelt" %>
 
-<style>
-  /* Notice: No more body{} tag! We use a wrapper instead to center the card. */
-  .main-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 70px);
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-  }
+<div class="box-border flex min-h-[calc(100vh-70px)] items-center justify-center p-8 font-['Railway',ui-sans-serif,system-ui,sans-serif]">
+  <div class="box-border w-full max-w-[420px] rounded-xl border border-[#EAEFFC] bg-white p-10 shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
 
-  .card {
-    background: #FFFFFF;
-    padding: 2.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    box-sizing: border-box;
-  }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    color: #4C4682;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  p {
-    color: #7973A8;
-    font-size: 0.875rem;
-    margin: 0 0 1.25rem 0;
-  }
-
-  label {
-    display: block;
-    color: #4C4682;
-    font-size: 0.825rem;
-    font-weight: 500;
-    margin-bottom: 0.35rem;
-  }
-
-  .form-group {
-    margin-bottom: 1rem;
-  }
-
-  /* Uses your exact .user-badge styling for input fields */
-  .input-field {
-    width: 100%;
-    background: #F0F2FC;
-    border: 1px solid #E0E3F6;
-    padding: 0.65rem 0.85rem;
-    border-radius: 8px;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-    font-size: 0.825rem;
-    color: #4C4682;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  .input-field:focus {
-    border-color: #685FD6;
-  }
-
-  /* Uses your exact .btn styling */
-  .btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    background: #685FD6;
-    color: #FFFFFF;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-    border: none;
-    cursor: pointer;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-    margin-top: 1.25rem;
-  }
-
-  .btn:hover {
-    background: #554CBF;
-  }
-
-  .flash-notice {
-    background: #EEF0FD;
-    border: 1px solid #E0E3F6;
-    color: #685FD6;
-    padding: 0.65rem 0.85rem;
-    border-radius: 8px;
-    font-size: 0.825rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .error-list {
-    color: #D93838;
-    font-size: 0.825rem;
-    margin-bottom: 1rem;
-  }
-
-  .error-list ul {
-    margin: 0.25rem 0 0 0;
-    padding-left: 1.25rem;
-  }
-</style>
-
-<div class="main-content-wrapper">
-  <div class="card">
-    <h2>Say Hi!</h2>
-    
+    <h2 class="m-0 mb-1 text-2xl font-semibold tracking-tight text-[#4C4682]">
+      Say Hi!
+    </h2>
+    <p class="mb-5 mt-0 text-xs text-[#7973A8]">
+      Send a message or schedule a call below.
+    </p>
 
     <% if notice %>
-      <div class="flash-notice"><%= notice %></div>
+      <div class="mb-5 rounded-lg border border-[#E0E3F6] bg-[#EEF0FD] p-3 text-[0.825rem] text-[#685FD6]">
+        <%= notice %>
+      </div>
     <% end %>
 
     <%= form_with model: @contact, url: contacts_path do |f| %>
       <% if @contact.errors.any? %>
-        <div class="error-list">
-          <ul>
+        <div class="mb-4 text-[0.825rem] text-[#D93838]">
+          <ul class="m-0 list-inside list-disc space-y-0.5 pl-2">
             <% @contact.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
@@ -134,23 +27,47 @@
         </div>
       <% end %>
 
-      <div class="form-group">
-        <%= f.label :name, "name" %>
-        <%= f.text_field :name, class: "input-field", required: true %>
+      <div class="mb-4">
+        <%= f.label :name, "name",
+              class: "mb-1.5 block text-[0.825rem] font-medium text-[#4C4682]" %>
+        <%= f.text_field :name,
+              required: true,
+              class: "w-full rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-3.5 py-2.5 font-['Railway',ui-sans-serif,system-ui,sans-serif] text-[0.825rem] text-[#4C4682] outline-none transition-colors duration-200 focus:border-[#685FD6]" %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :email, "email" %>
-        <%= f.email_field :email, class: "input-field", required: true %>
+      <div class="mb-4">
+        <%= f.label :email, "email",
+              class: "mb-1.5 block text-[0.825rem] font-medium text-[#4C4682]" %>
+        <%= f.email_field :email,
+              required: true,
+              class: "w-full rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-3.5 py-2.5 font-['Railway',ui-sans-serif,system-ui,sans-serif] text-[0.825rem] text-[#4C4682] outline-none transition-colors duration-200 focus:border-[#685FD6]" %>
       </div>
 
-      <div class="form-group">
-        <%= f.label :message, "message" %>
-        <%= f.text_area :message, rows: 4, class: "input-field", required: true %>
+      <div class="mb-4">
+        <%= f.label :message, "message",
+              class: "mb-1.5 block text-[0.825rem] font-medium text-[#4C4682]" %>
+        <%= f.text_area :message,
+              rows: 4,
+              required: true,
+              class: "w-full rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-3.5 py-2.5 font-['Railway',ui-sans-serif,system-ui,sans-serif] text-[0.825rem] text-[#4C4682] outline-none transition-colors duration-200 focus:border-[#685FD6]" %>
       </div>
 
-      <%= f.submit "Send Message", class: "btn" %>
-
+      <%= f.submit "Send Message",
+            class: "mt-5 block w-full cursor-pointer rounded-lg border-0 bg-[#685FD6] px-4 py-2.5 text-center text-sm font-medium text-white transition-colors duration-200 font-['Railway',ui-sans-serif,system-ui,sans-serif] hover:bg-[#554CBF]" %>
     <% end %>
+
+    <div class="relative my-6 text-center">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-[#EAEFFC]"></div>
+      </div>
+      <span class="relative bg-white px-3 text-xs text-[#7973A8]">or</span>
+    </div>
+
+    <a href="https://calendar.app.google/gkrRmTXPfUFEPbTy9"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="block w-full rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-4 py-2.5 text-center text-xs font-medium text-[#685FD6] no-underline transition-all duration-200 hover:border-[#685FD6] hover:bg-[#685FD6] hover:text-white">
+      Schedule with Me
+    </a>
   </div>
 </div>

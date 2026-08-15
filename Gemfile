@@ -91,3 +91,5 @@ gem "factory_bot", "~> 6.6"
 gem "avo", "~> 4.0"
 
 gem "nokogiri", "~> 1.19"
+
+gem "htmlbeautifier", "~> 1.4"

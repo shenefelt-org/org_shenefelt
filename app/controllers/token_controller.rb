@@ -1,3 +1,4 @@
+# GS use JWT encode for HS256 compliant token
 class TokenController < ApplicationController
   def new
     # Pre-populate with logged-in user's email address

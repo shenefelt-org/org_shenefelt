@@ -1,143 +1,44 @@
 <% content_for :title, "Dashboard - Shenefelt" %>
 
-<style>
-  /* Notice: No more body{} tag! We use a wrapper instead to center the card. */
-  .main-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 70px);
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-  }
+<div class="box-border flex min-h-[calc(100vh-70px)] items-center justify-center p-8 font-['Railway',ui-sans-serif,system-ui,sans-serif]">
+  <div class="box-border w-full max-w-[420px] rounded-xl border border-[#EAEFFC] bg-white p-10 shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    <p class="mb-2 text-sm text-[#7973A8]">logged in as</p>
 
-  .card {
-    background: #FFFFFF;
-    padding: 2.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    box-sizing: border-box;
-  }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    color: #4C4682;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  p {
-    color: #7973A8;
-    font-size: 0.875rem;
-    margin: 0 0 0.5rem 0;
-  }
-
-  .user-badge {
-    background: #F0F2FC;
-    border: 1px solid #E0E3F6;
-    padding: 0.65rem 0.85rem;
-    border-radius: 8px;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-    font-size: 0.825rem;
-    color: #4C4682;
-    margin-bottom: 1.5rem;
-    word-break: break-all;
-  }
-
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .btn {
-    display: block;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    background: #685FD6;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-  }
-
-  .btn:hover {
-    background: #554CBF;
-  }
-
-  .btn-secondary {
-    background: #EEF0FD;
-    color: #685FD6;
-  }
-
-  .btn-secondary:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-  }
-
-  .logout-form {
-    margin-top: 1.5rem;
-    text-align: center;
-  }
-
-  .logout-form form {
-    display: inline;
-  }
-
-  .logout-btn {
-    background: none;
-    border: none;
-    color: #8C87B3;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0;
-    font: inherit;
-    transition: color 0.2s ease;
-  }
-
-  .logout-btn:hover {
-    color: #685FD6;
-    text-decoration: underline;
-  }
-</style>
-
-<div class="main-content-wrapper">
-  <div class="card">
-    <p>logged in as</p>
-    <div class="user-badge"><%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %></div>
-
-    <div class="nav-links">
-      <% if policy(:dashboard).view_r2_storage_button? %>
-        <a href="/files" class="btn">R2 Cloud Object Storage (sad-wig)</a>
-      <% end %>
-
-      <% if policy(:dashboard).view_pokedex_button? %>
-        <a href="/pokemons" class="btn btn-secondary">View Pokemon</a>
-      <% end %>
-
-      <a href="/pokedex/1285" class="btn btn-secondary">View Pokedex</a>
-      
-      <!-- Added Contact Us Link -->
-      <a href="<%= new_contact_path %>" class="btn btn-secondary">Contact Me</a>
-
-      <a href="/portfolio" class= "btn btn-secondary">Portfolio</a>
-
-      <a href="https://github.com/greg0rys" class= "btn btn-secondary">GitHub</a>
-
+    <div class="mb-6 break-all rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-[0.85rem] py-[0.65rem] font-['Railway',ui-sans-serif,system-ui,sans-serif] text-[0.825rem] text-[#4C4682]">
+      <%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %>
     </div>
 
-    <div class="logout-form">
-      <%= button_to "Log Out", logout_path, method: :delete, class: "logout-btn" %>
+    <div class="flex flex-col gap-3">
+      <% if policy(:dashboard).view_r2_storage_button? %>
+        <a href="/files"
+           class="box-border block rounded-lg bg-[#685FD6] px-[1.15rem] py-[0.65rem] text-center text-sm font-medium text-white no-underline transition-all duration-200 ease-in-out hover:bg-[#554CBF]">
+          R2 Cloud Object Storage (sad-wig)
+        </a>
+      <% end %>
+
+
+
+      <a href="<%= contacts_path %>"
+         class="box-border block rounded-lg bg-[#EEF0FD] px-[1.15rem] py-[0.65rem] text-center text-sm font-medium text-[#685FD6] no-underline transition-all duration-200 ease-in-out hover:bg-[#685FD6] hover:text-white">
+        View Contact Submissions
+      </a>
+
+      <a href="/portfolio"
+         class="box-border block rounded-lg bg-[#EEF0FD] px-[1.15rem] py-[0.65rem] text-center text-sm font-medium text-[#685FD6] no-underline transition-all duration-200 ease-in-out hover:bg-[#685FD6] hover:text-white">
+        Portfolio
+      </a>
+
+      <a href="https://github.com/greg0rys"
+         class="box-border block rounded-lg bg-[#EEF0FD] px-[1.15rem] py-[0.65rem] text-center text-sm font-medium text-[#685FD6] no-underline transition-all duration-200 ease-in-out hover:bg-[#685FD6] hover:text-white">
+        GitHub
+      </a>
+    </div>
+
+    <div class="mt-6 text-center">
+      <%= button_to "Log Out",
+            logout_path,
+            method: :delete,
+            class: "cursor-pointer border-0 bg-transparent p-0 text-[0.85rem] font-medium text-[#8C87B3] transition-colors duration-200 ease-in-out hover:text-[#685FD6] hover:underline" %>
     </div>
   </div>
 </div>

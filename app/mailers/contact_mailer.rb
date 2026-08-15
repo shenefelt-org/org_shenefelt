@@ -5,7 +5,7 @@ class ContactMailer < ApplicationMailer
         mail(
             to: "notifications@shenefelt.org",
             reply_to: @contact.email,
-            subject: "new submission form from #{@contact.name}"
+            subject: "Contact Form Submission: #{@contact.name}"
         )
     end
 end

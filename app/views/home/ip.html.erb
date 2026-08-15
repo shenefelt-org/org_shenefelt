@@ -1,112 +1,25 @@
 <% content_for :title, "IP Address - Shenefelt" %>
 
-<style>
-  .main-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 70px);
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-  }
+<div class="box-border flex min-h-[calc(100vh-70px)] items-center justify-center p-8 font-['Railway',ui-sans-serif,system-ui,sans-serif]">
+  <div class="box-border w-full max-w-[420px] rounded-xl border border-[#EAEFFC] bg-white p-10 shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    <h2 class="mb-1 mt-0 text-2xl font-semibold tracking-tight text-[#4C4682]">
+      Public IP
+    </h2>
 
-  .card {
-    background: #FFFFFF;
-    padding: 2.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    box-sizing: border-box;
-  }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 0.25rem;
-    color: #4C4682;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  p.subtitle {
-    color: #7973A8;
-    font-size: 0.875rem;
-    margin: 0 0 1.25rem 0;
-  }
-
-  .ip-display {
-    background: #F0F2FC;
-    border: 1px solid #E0E3F6;
-    padding: 1rem 0.85rem;
-    border-radius: 8px;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #685FD6;
-    text-align: center;
-    margin-bottom: 1.25rem;
-    word-break: break-all;
-  }
-
-  .meta-label {
-    display: block;
-    color: #4C4682;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.35rem;
-  }
-
-  .meta-box {
-    background: #F8F9FE;
-    border: 1px solid #E0E3F6;
-    padding: 0.65rem 0.85rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    color: #7973A8;
-    margin-bottom: 1.5rem;
-    word-break: break-all;
-    line-height: 1.4;
-  }
-
-  .btn-secondary {
-    display: block;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    background: #EEF0FD;
-    color: #685FD6;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-  }
-
-  .btn-secondary:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-  }
-</style>
-
-<div class="main-content-wrapper">
-  <div class="card">
-    <h2>Public IP</h2>
-    
-
-    <div class="ip-display">
+    <div class="mb-5 break-all rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-[0.85rem] py-4 text-center font-['Railway',ui-sans-serif,system-ui,sans-serif] text-xl font-semibold text-[#685FD6]">
       <%= @ip %>
     </div>
 
-    <span class="meta-label">User Agent</span>
-    <div class="meta-box">
+    <span class="mb-[0.35rem] block text-xs font-semibold uppercase tracking-wider text-[#4C4682]">
+      User Agent
+    </span>
+    <div class="mb-6 break-all rounded-lg border border-[#E0E3F6] bg-[#F8F9FE] px-[0.85rem] py-[0.65rem] text-xs leading-snug text-[#7973A8]">
       <%= @user_agent %>
     </div>
 
-    <a href="/" class="btn-secondary">Back to Dashboard</a>
+    <a href="/"
+       class="box-border block rounded-lg bg-[#EEF0FD] px-[1.15rem] py-[0.65rem] text-center text-sm font-medium text-[#685FD6] no-underline transition-all duration-200 ease-in-out hover:bg-[#685FD6] hover:text-white">
+      Back to Dashboard
+    </a>
   </div>
 </div>

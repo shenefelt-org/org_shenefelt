@@ -1,2 +1,3 @@
 class FunkoPop < ApplicationRecord
+    
 end

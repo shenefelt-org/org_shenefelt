@@ -196,6 +196,7 @@ GEM
       activesupport (>= 6.1)
     hashie (5.1.0)
       logger
+    htmlbeautifier (1.4.3)
     httparty (0.24.2)
       csv
       mini_mime (>= 1.0.0)
@@ -595,6 +596,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot (~> 6.6)
+  htmlbeautifier (~> 1.4)
   httparty
   image_processing (~> 1.2)
   importmap-rails
@@ -699,6 +701,7 @@ CHECKSUMS
   fugit (1.13.0) sha256=a4f093fce740da52f216740a5041e2a594ea763cdb89e8b2754ca4399634ab18
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   hashie (5.1.0) sha256=c266471896f323c446ea8207f8ffac985d2718df0a0ba98651a3057096ca3870
+  htmlbeautifier (1.4.3) sha256=b43d08f7e2aa6ae1b5a6f0607b4ed8954c8d4a8e85fd2336f975dda1e4db385b
   httparty (0.24.2) sha256=8fca6a54aa0c4aa4303a0fd33e5e2156175d6a5334f714263b458abd7fda9c38
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   image_processing (1.14.0) sha256=754cc169c9c262980889bec6bfd325ed1dafad34f85242b5a07b60af004742fb

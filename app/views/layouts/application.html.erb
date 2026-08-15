@@ -8,161 +8,103 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
+    <!-- 1. Google Font: Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- 2. Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 3. Configure Tailwind to use Raleway as default font-sans -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Raleway', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "login", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
-  <body>
-    <style>
-  .site-navbar {
-    background: #FFFFFF;
-    border-bottom: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-  }
-
-  .nav-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .nav-brand {
-    color: #4C4682;
-    font-size: 1.25rem;
-    font-weight: 600;
-    text-decoration: none;
-    letter-spacing: -0.02em;
-    transition: color 0.2s ease;
-  }
-  
-  .nav-brand:hover {
-    color: #685FD6;
-  }
-
-  .nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  .nav-link {
-    color: #7973A8;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-
-  .nav-link:hover, .nav-link.active {
-    color: #685FD6;
-  }
-
-  .nav-divider {
-    width: 1px;
-    height: 24px;
-    background: #EAEFFC;
-  }
-
-  .nav-user {
-    background: #F0F2FC;
-    border: 1px solid #E0E3F6;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-    font-size: 0.8rem;
-    color: #4C4682;
-  }
-
-  .nav-logout-btn {
-    background: none;
-    border: none;
-    color: #8C87B3;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0;
-    font: inherit;
-    transition: color 0.2s ease;
-  }
-
-  .nav-logout-btn:hover {
-    color: #685FD6;
-  }
-
-  .nav-logout-form {
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-</style>
-
-<nav class="site-navbar">
-  <div class="nav-container">
-    <%# Left side: Brand / Logo %>
-    <%= link_to "Shenefelt", root_path, class: "nav-brand" %>
-
-    <%# Right side: Links and User Actions %>
-    <div class="nav-menu">
-      <% unless current_page?(root_path) %>
-        <%= link_to "Dashboard", root_path, class: "nav-link" %>
-      <% end %>
-
-      <% unless current_page?(pokemons_path) %>
-        <%= link_to "Pokemon Base Info", pokemons_path, class: "nav-link" %>
-      <% end %>
-      
-      <% unless current_page?(pokedexes_path) %>
-        <%= link_to "Pokedex", pokedexes_path, class: "nav-link" %>
-      <% end %>
-
-      <% unless current_page?(ip_path) %>
-        <%= link_to "Public IP", ip_path, class: "nav-link" %>
-      <% end %>
-      
-      <% unless current_page?(portfolio_path) %>
-        <%= link_to "Portfolio", portfolio_path, class: "nav-link" %>
-      <% end %>
-      
-
-    
-      <!-- Hidden admin links via pundit policy -->
-      <% unless current_page?(files_path) %>
-        <% if policy(:files).view_files_button? %>
-          <%= link_to "Files", files_path, class: "nav-link" %>
-        <% end %>
-      <% end %>
-      
-
-      <div class="nav-divider"></div>
-
-      <%# Assumes a user is logged in %>
-      <span class="nav-user">
-        <%= @user&.email_address || @user&.email || Current.user&.email_address || Current.user&.email %>
-      </span>
-
-      <%= button_to "Log Out", logout_path, method: :delete, class: "nav-logout-btn", form_class: "nav-logout-form" %>
-    </div>
-  </div>
-</nav>
+  <body class="font-sans bg-[#FAFBFD] text-[#2D2B4A]">
+    <!-- Site Navbar -->
+    <nav class="bg-white border-b border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)] sticky top-0 z-[100] font-sans">
+      <div class="max-w-[1000px] mx-auto px-6 h-16 flex justify-between items-center">
+        <%# Left side: Brand / Logo %>
+        <div class="flex items-center h-full">
+          <%= link_to "Shenefelt", root_path, class: "text-[#4C4682] hover:text-[#685FD6] text-xl font-bold tracking-tight transition-colors duration-200 no-underline leading-none flex items-center" %>
+        </div>
+        <%# Right side: Links and User Actions %>
+        <div class="flex items-center gap-6 h-full">
+          <% unless current_page?(root_path) %>
+            <%= link_to "Dashboard", root_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+          <% end %>
+          <!-- Projects Dropdown Menu -->
+          <div class="relative group flex items-center h-full cursor-pointer">
+            <span class="text-[#7973A8] group-hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 flex items-center">
+              Portfolio
+            </span>
+            <!-- Dropdown Chevron Indicator -->
+            <svg width="14" height="14" class="w-3.5 h-3.5 ml-1 text-[#7973A8] group-hover:text-[#685FD6] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+            <!-- Submenu Dropdown -->
+            <div class="absolute left-0 top-full pt-1 hidden group-hover:block z-50">
+              <div class="bg-white border border-[#EAEFFC] rounded-md shadow-lg py-1 min-w-[180px]">
+                <% unless current_page?(portfolio_path) %>
+                  <%= link_to "All Projects", portfolio_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                <% end %>
+                <% unless current_page?(pokemons_path) %>
+                  <%= link_to "Pokemon Base Info", pokemons_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                <% end %>
+                <% unless current_page?(pokedexes_path) %>
+                  <%= link_to "Pokedex", pokedexes_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                <% end %>
+                <% unless current_page?(ip_path) %>
+                  <%= link_to "Public IP", ip_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                <% end %>
+                <% unless current_page?(funko_pops_path) %>
+                  <%= link_to "Funko Collection", funko_pops_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                <% end %>
+                <%# Safe policy check to prevent Files link from breaking on public pages %>
+                <% can_view_files = begin
+                     policy(:files).view_files_button?
+                   rescue StandardError
+                     true # Fallback to showing link if policy check can't run
+                   end %>
+                <% if can_view_files %>
+                  <% unless current_page?(files_path) %>
+                    <%= link_to "Files", files_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <% unless current_page?(new_contact_path) %>
+            <%= link_to "Contact Me", new_contact_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+          <% end %>
+          <!-- Divider -->
+          <div class="w-px h-6 bg-[#EAEFFC] self-center"></div>
+          <%# Assumes a user is logged in %>
+          <% current_user_email = @user&.email_address || @user&.email || (defined?(Current) && (Current.user&.email_address || Current.user&.email)) %>
+          <% if current_user_email.present? %>
+            <span class="bg-[#F0F2FC] border border-[#E0E3F6] px-3 py-1.5 rounded-md text-xs text-[#4C4682] font-semibold flex items-center self-center">
+              <%= current_user_email %>
+            </span>
+          <% end %>
+          <%= button_to "Log Out", logout_path, method: :delete, class: "bg-transparent border-0 text-[#8C87B3] hover:text-[#685FD6] text-[0.85rem] font-semibold p-0 transition-colors duration-200 cursor-pointer flex items-center h-full", form_class: "m-0 flex items-center h-full" %>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

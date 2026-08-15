@@ -1,303 +1,84 @@
-<style>
-  .files-wrapper {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #2D2B4A;
-    background: #FFFFFF;
-    border-radius: 12px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-  }
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-  .files-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .files-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #4C4682;
-    margin: 0;
-    letter-spacing: -0.02em;
-  }
-
-  .header-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .header-nav form {
-    display: inline;
-    margin: 0;
-  }
-
-  .nav-btn {
-    display: inline-block;
-    padding: 0.45rem 0.85rem;
-    font-size: 0.825rem;
-    font-weight: 500;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    font-family: inherit;
-    box-sizing: border-box;
-  }
-
-  .nav-btn-home {
-    background: #EEF0FD;
-    color: #685FD6;
-    border: 1px solid #E0E3F6;
-  }
-
-  .nav-btn-home:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-    border-color: #685FD6;
-  }
-
-  .nav-btn-logout {
-    background: transparent;
-    border: 1px solid #E0E3F6;
-    color: #8C87B3;
-    cursor: pointer;
-  }
-
-  .nav-btn-logout:hover {
-    color: #685FD6;
-    border-color: #C7D2FE;
-    background: #EEF0FD;
-  }
-
-  .nav-btn-upload {
-    background: #EEF0FD;
-    color: #685FD6;
-    border: 1px solid #E0E3F6;
-    cursor: pointer;
-  }
-
-  .nav-btn-upload:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-    border-color: #685FD6;
-  }
-
-  .flash-message {
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .flash-alert {
-    background: #FEE2E2;
-    color: #991B1B;
-    border: 1px solid #FCA5A5;
-  }
-
-  .flash-notice {
-    background: #EEF0FD;
-    color: #4C4682;
-    border: 1px solid #C7D2FE;
-  }
-
-  .filter-form {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .filter-input {
-    flex: 1;
-    padding: 0.55rem 0.85rem;
-    border: 1px solid #E0E3F6;
-    border-radius: 8px;
-    background: #F8F9FE;
-    color: #2D2B4A;
-    font-size: 0.875rem;
-    outline: none;
-    transition: all 0.2s ease;
-  }
-
-  .filter-input:focus {
-    border-color: #8C82F2;
-    background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(140, 130, 242, 0.15);
-  }
-
-  .btn-filter {
-    padding: 0.55rem 1.15rem;
-    background: #685FD6;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: background 0.2s ease;
-  }
-
-  .btn-filter:hover {
-    background: #554CBF;
-  }
-
-  .files-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-size: 0.875rem;
-  }
-
-  .files-table th {
-    padding: 0.75rem 0.85rem;
-    font-weight: 600;
-    color: #7973A8;
-    border-bottom: 2px solid #EEF0FD;
-    text-transform: uppercase;
-    font-size: 0.725rem;
-    letter-spacing: 0.05em;
-  }
-
-  .files-table td {
-    padding: 0.75rem 0.85rem;
-    border-bottom: 1px solid #F0F2FC;
-    vertical-align: middle;
-    color: #4A4668;
-  }
-
-  .files-table tr:hover {
-    background: #FAFBFD;
-  }
-
-  .key-code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 0.825rem;
-    background: #F0F2FC;
-    color: #4C4682;
-    padding: 0.2rem 0.45rem;
-    border-radius: 5px;
-  }
-
-  .action-btn {
-    display: inline-block;
-    padding: 0.3rem 0.75rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #685FD6;
-    background: #EEF0FD;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-  }
-
-  .action-btn:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-  }
-
-  .delete-btn {
-    background: #FFF0F0;
-    color: #D32F2F;
-  }
-
-  .delete-btn:hover {
-    background: #D32F2F;
-    color: #FFFFFF;
-  }
-
-  .inline-form {
-    display: inline;
-    margin: 0;
-  }
-
-  .empty-state {
-    padding: 2.5rem;
-    text-align: center;
-    color: #8C87B3;
-    background: #F8F9FE;
-    border-radius: 8px;
-    border: 1px dashed #E0E3F6;
-    font-size: 0.9rem;
-  }
-
-  .meta-count {
-    margin-top: 1rem;
-    font-size: 0.775rem;
-    color: #8C87B3;
-    text-align: right;
-  }
-</style>
-
-<div class="files-wrapper">
-  <div class="files-header">
-    <h1 class="files-title">Files</h1>
-    <div class="header-nav">
-      <%= button_to "Upload", new_file_path, method: :get, class: "nav-btn nav-btn-upload" %>
+<div class="max-w-[900px] my-8 mx-auto p-8 font-sans text-[#2D2B4A] bg-white rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+  
+  <!-- Header Section -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-[#4C4682] m-0 tracking-tight">Files</h1>
+    <div class="flex items-center gap-2">
+      <%= button_to "Upload", new_file_path, method: :get, class: "inline-block px-3.5 py-2 text-[0.825rem] font-medium rounded-md no-underline transition-all duration-200 cursor-pointer bg-[#EEF0FD] text-[#685FD6] border border-[#E0E3F6] hover:bg-[#685FD6] hover:text-white hover:border-[#685FD6]" %>
     </div>
   </div>
 
+  <!-- Flash Messages -->
   <% if flash[:alert].present? %>
-    <p class="flash-message flash-alert"><%= flash[:alert] %></p>
+    <p class="p-3 px-4 rounded-lg text-sm mb-5 bg-[#FEE2E2] text-[#991B1B] border border-[#FCA5A5]">
+      <%= flash[:alert] %>
+    </p>
   <% end %>
 
   <% if flash[:notice].present? %>
-    <p class="flash-message flash-notice"><%= flash[:notice] %></p>
+    <p class="p-3 px-4 rounded-lg text-sm mb-5 bg-[#EEF0FD] text-[#4C4682] border border-[#C7D2FE]">
+      <%= flash[:notice] %>
+    </p>
   <% end %>
 
-  <%= form_with url: files_path, method: :get, local: true, class: "filter-form" do %>
+  <!-- Filter Form -->
+  <%= form_with url: files_path, method: :get, local: true, class: "flex gap-2 mb-6" do %>
     <%= text_field_tag :prefix,
       @prefix,
       placeholder: "optional/prefix/",
-      class: "filter-input" %>
-    <%= submit_tag "Filter", class: "btn-filter" %>
+      class: "flex-1 px-3.5 py-2 border border-[#E0E3F6] rounded-lg bg-[#F8F9FE] text-[#2D2B4A] text-sm outline-none transition-all duration-200 focus:border-[#8C82F2] focus:bg-white focus:ring-4 focus:ring-[#8C82F2]/15" %>
+    <%= submit_tag "Filter", class: "px-4.5 py-2 bg-[#685FD6] text-white border-0 rounded-lg font-medium text-sm cursor-pointer hover:bg-[#554CBF] transition-colors duration-200" %>
   <% end %>
 
+  <!-- Content Table or Empty State -->
   <% if @files.blank? %>
-    <div class="empty-state">
-      <p style="margin: 0;">No objects found.</p>
+    <div class="p-10 text-center text-[#8C87B3] bg-[#F8F9FE] rounded-lg border border-dashed border-[#E0E3F6] text-sm">
+      <p class="m-0">No objects found.</p>
     </div>
   <% else %>
-    <table class="files-table">
+    <table class="w-full border-collapse text-left text-sm">
       <thead>
         <tr>
-          <th>Key</th>
-          <th>Size</th>
-          <th>Last modified</th>
-          <th></th>
+          <th class="px-3.5 py-3 font-semibold text-[#7973A8] border-b-2 border-[#EEF0FD] uppercase text-[0.725rem] tracking-wider">Key</th>
+          <th class="px-3.5 py-3 font-semibold text-[#7973A8] border-b-2 border-[#EEF0FD] uppercase text-[0.725rem] tracking-wider">Size</th>
+          <th class="px-3.5 py-3 font-semibold text-[#7973A8] border-b-2 border-[#EEF0FD] uppercase text-[0.725rem] tracking-wider">Last modified</th>
+          <th class="px-3.5 py-3 border-b-2 border-[#EEF0FD]"></th>
         </tr>
       </thead>
       <tbody>
         <% @files.each do |f| %>
           <% key = f[:key].to_s %>
           <% folder = key.end_with?("/") %>
-          <tr>
-            <td><code class="key-code"><%= key %></code></td>
-            <td><%= f[:size].present? ? number_to_human_size(f[:size].to_i) : "-" %></td>
-            <td><%= f[:last_modified] || "-" %></td>
-            <td style="text-align: right;">
+          <tr class="hover:bg-[#FAFBFD] transition-colors duration-150">
+            <td class="px-3.5 py-3 border-b border-[#F0F2FC] align-middle text-[#4A4668]">
+              <code class="font-mono text-[0.825rem] bg-[#F0F2FC] text-[#4C4682] px-2 py-1 rounded"><%= key %></code>
+            </td>
+            <td class="px-3.5 py-3 border-b border-[#F0F2FC] align-middle text-[#4A4668]">
+              <%= f[:size].present? ? number_to_human_size(f[:size].to_i) : "-" %>
+            </td>
+            <td class="px-3.5 py-3 border-b border-[#F0F2FC] align-middle text-[#4A4668]">
+              <%= f[:last_modified] || "-" %>
+            </td>
+            <td class="px-3.5 py-3 border-b border-[#F0F2FC] align-middle text-right">
               <% if folder %>
-                <%= link_to "Open", files_path(prefix: key), class: "action-btn" %>
+                <%= link_to "Open", files_path(prefix: key), class: "inline-block px-3 py-1 text-[0.8rem] font-medium text-[#685FD6] bg-[#EEF0FD] rounded-md no-underline border-0 cursor-pointer transition-all duration-200 hover:bg-[#685FD6] hover:text-white" %>
               <% else %>
                 <%= link_to "Download",
                   download_files_path(key: key),
                   data: { turbo: false },
-                  class: "action-btn" %>
+                  class: "inline-block px-3 py-1 text-[0.8rem] font-medium text-[#685FD6] bg-[#EEF0FD] rounded-md no-underline border-0 cursor-pointer transition-all duration-200 hover:bg-[#685FD6] hover:text-white" %>
               <% end %>
 
               <% if policy(:files).view_delete_button? %>
                 <%= button_to "Delete",
                   files_path(key: key),
                   method: :delete,
-                  form: { class: "inline-form" },
+                  form: { class: "inline m-0" },
                   data: { turbo_confirm: "Are you sure you want to delete #{key}?" },
-                  class: "action-btn delete-btn" %>
+                  class: "inline-block px-3 py-1 text-[0.8rem] font-medium bg-[#FFF0F0] text-[#D32F2F] rounded-md no-underline border-0 cursor-pointer transition-all duration-200 hover:bg-[#D32F2F] hover:text-white" %>
               <% end %>
             </td>
           </tr>
@@ -305,6 +86,6 @@
       </tbody>
     </table>
 
-    <p class="meta-count"><%= @files.size %> files in /sad-wig</p>
+    <p class="mt-4 text-[0.775rem] text-[#8C87B3] text-right"><%= @files.size %> files in /sad-wig</p>
   <% end %>
 </div>

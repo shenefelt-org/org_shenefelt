@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :client_contacts
   resources :funko_pops, path: "funko"
   resources :contacts, path: "contact"
   resources :files, only: %i[index new create destroy] do

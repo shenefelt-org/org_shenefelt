@@ -1,0 +1,56 @@
+<!-- app/views/client_contacts/new.html.erb -->
+<div class="max-w-[650px] my-8 mx-auto p-6 md:p-8 font-sans text-[#2D2B4A] bg-white rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+  
+  <!-- Header Section -->
+  <div class="flex justify-between items-center pb-6 mb-6 border-b border-[#EEF0FD]">
+    <div>
+      <h1 class="text-2xl font-semibold text-[#4C4682] m-0 tracking-tight">New Client Contact</h1>
+      <p class="text-sm text-[#7973A8] mt-1 m-0">Link a contact submission and attach internal notes</p>
+    </div>
+    <%= link_to "← Back to List", client_contacts_path, class: "text-xs font-medium text-[#685FD6] hover:underline no-underline" %>
+  </div>
+
+  <!-- Form -->
+  <%= form_with(model: @client_contact, local: true, class: "space-y-5") do |f| %>
+    
+    <!-- Error Handling -->
+    <% if @client_contact.errors.any? %>
+      <div class="p-4 rounded-lg bg-[#FEE2E2] border border-[#FCA5A5] text-sm text-[#991B1B]">
+        <p class="font-semibold m-0 mb-1"><%= pluralize(@client_contact.errors.count, "error") %> prevented saving:</p>
+        <ul class="list-disc list-inside m-0 space-y-0.5 text-xs">
+          <% @client_contact.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Associated Contact Field (contact_id) -->
+    <div>
+      <%= f.label :contact_id, "Associated Contact Submission", class: "block text-xs font-semibold uppercase text-[#7973A8] tracking-wider mb-1.5" %>
+      <%= f.collection_select :contact_id, 
+                              @contacts || Contact.all, 
+                              :id, 
+                              ->(c) { "Contact ##{c.id} — #{c.name} (#{c.email})" }, 
+                              { prompt: "Select a contact submission..." }, 
+                              class: "w-full px-3.5 py-2.5 border border-[#E0E3F6] rounded-lg bg-[#F8F9FE] text-[#2D2B4A] text-sm outline-none transition-all focus:border-[#685FD6] focus:bg-white focus:ring-4 focus:ring-[#8C82F2]/15" %>
+    </div>
+
+    <!-- Notes Field (notes) -->
+    <div>
+      <%= f.label :notes, "Internal Notes", class: "block text-xs font-semibold uppercase text-[#7973A8] tracking-wider mb-1.5" %>
+      <%= f.text_area :notes, 
+                      rows: 6, 
+                      placeholder: "Add internal notes, follow-up items, or client context...", 
+                      class: "w-full px-3.5 py-2.5 border border-[#E0E3F6] rounded-lg bg-[#F8F9FE] text-[#2D2B4A] text-sm outline-none transition-all focus:border-[#685FD6] focus:bg-white focus:ring-4 focus:ring-[#8C82F2]/15 leading-relaxed" %>
+    </div>
+
+    <!-- Form Action Buttons -->
+    <div class="flex justify-end gap-3 pt-5 border-t border-[#EEF0FD] mt-6">
+      <%= link_to "Cancel", client_contacts_path, class: "px-4 py-2 text-sm font-medium text-[#7973A8] bg-[#F0F2FC] rounded-lg hover:bg-[#E0E3F6] transition-colors no-underline" %>
+      <%= f.submit "Create Client Contact", class: "px-5 py-2 bg-[#685FD6] text-white border-0 rounded-lg font-medium text-sm cursor-pointer hover:bg-[#554CBF] transition-colors shadow-sm" %>
+    </div>
+
+  <% end %>
+
+</div>

@@ -19,6 +19,10 @@ class FunkoPopsController < ApplicationController
         end
     end
 
+    
+    def show
+    end
+
     private
 
     def funko_pop_params

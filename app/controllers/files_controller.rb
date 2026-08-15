@@ -18,7 +18,7 @@ class FilesController < ApplicationController
     flash.now[:alert] = "Could not list files: #{e.class}: #{e.message}"
   end
 
-  # GET /files/download?key=...
+  
   def download
     key = params[:key].to_s
     return redirect_to(files_path, alert: "Missing file key.") if key.blank?
@@ -31,7 +31,7 @@ class FilesController < ApplicationController
     redirect_to files_path, alert: "Download failed: #{e.message}"
   end
 
-  # POST /files or POST /files/upload
+  # POST /files
   def create
     file = params[:file] || Array(params[:files]).first
     return redirect_to(files_path, alert: "Please select a file to upload.") if file.blank?
@@ -52,7 +52,7 @@ class FilesController < ApplicationController
   end
   alias_method :upload, :create
 
-  # DELETE /files/destroy?key=...
+  # DELETE /files/destroy
   def destroy
     key = params[:key].to_s
     return redirect_to(files_path, alert: "Missing file key.") if key.blank?

@@ -25,7 +25,7 @@ class PokedexesController < ApplicationController
 
     respond_to do |format|
       if @pokedex.save
-        format.html { redirect_to @pokedex, notice: "Pokedex was successfully created." }
+        format.html { redirect_to @pokedex, notice: "Pokedex entry successfully created." }
         format.json { render :show, status: :created, location: @pokedex }
       else
         format.html { render :new, status: :unprocessable_content }
