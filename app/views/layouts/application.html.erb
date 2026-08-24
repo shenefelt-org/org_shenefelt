@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Org Shenefelt" %></title>
+    <title><%= content_for(:title) || "SHENEFELT.ORG" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Org Shenefelt">
@@ -27,9 +27,9 @@
         }
       }
     </script>
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# set site favicon to random pokemon sprite %>
+    <%= favicon_link_tag get_random_sprite_url %>
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "login", "data-turbo-track": "reload" %>

@@ -10,4 +10,13 @@ module ApplicationHelper
   }
 
   REDIS = Redis.new(host: red_cred[:host], port: red_cred[:port])
+
+  # grab some random sprite url for the favicon
+  def get_random_sprite_url
+    temp = Pokemon&.count
+    reurn nil if temp.zero?
+
+    # use O(n) for now - this needs to be sped up 
+    Pokemon.offset(rand(temp)).pluck(:sprite_url)&.first
+  end
 end

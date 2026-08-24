@@ -1,5 +1,5 @@
 class PokemonsController < ApplicationController
-  allow_unauthenticated_access only: [:show]
+  allow_unauthenticated_access only: [ :index ]
   before_action :set_pokemon, only: %i[ show edit update destroy ]
 
   # GET /pokemons or /pokemons.json

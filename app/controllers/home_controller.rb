@@ -17,6 +17,10 @@ class HomeController < ApplicationController
   def portfolio
   end
 
+  def command_center
+    @user.admin? && @user.present?
+  end
+
   def ip
     @ip = request.remote_ip
     @user_agent = request.user_agent

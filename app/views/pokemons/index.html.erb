@@ -1,14 +1,4 @@
-<% content_for :title, "Pokemons" %>
-
-<% if policy(Pokemon).show_edit? %>
-  <div class="mx-auto mb-8 max-w-[800px] rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-6 py-4 text-sm font-medium text-[#4C4682] font-['Railway',ui-sans-serif,system-ui,sans-serif]">
-    <p>Super Admin <%= current_user&.email %></p>
-  </div>
-<% else %>
-  <div class="mx-auto mb-8 max-w-[800px] rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-6 py-4 text-sm font-medium text-[#4C4682] font-['Railway',ui-sans-serif,system-ui,sans-serif]">
-    <p>You are a regular user. You can view pokemons but cannot edit them.</p>
-  </div>
-<% end %>
+<% content_for :title, "Pokemon Info" %>
 
 <div class="mx-auto my-12 max-w-[800px] text-[#2D2B4A] font-['Railway',ui-sans-serif,system-ui,sans-serif]">
   <% if notice.present? %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :portfolios
   resources :client_contacts
   resources :funko_pops, path: "funko"
   resources :contacts, path: "contact"
