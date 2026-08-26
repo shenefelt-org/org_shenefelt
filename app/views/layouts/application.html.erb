@@ -27,8 +27,11 @@
         }
       }
     </script>
-    <%# set site favicon to random pokemon sprite %>
-    <%= favicon_link_tag get_random_sprite_url %>
+    <%# Safe check for Pokemon sprite favicon %>
+    <% sprite_url = begin get_random_sprite_url rescue nil end %>
+    <% if sprite_url.present? %>
+      <%= favicon_link_tag sprite_url %>
+    <% end %>
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "login", "data-turbo-track": "reload" %>
@@ -87,9 +90,8 @@
             </div>
           </div>
 
-          <!-- Forms Dropdown Menu (Logged In Check + Admin Routing) -->
-          <% active_user = (defined?(current_user) && current_user) || @user || (defined?(Current) && Current.user) %>
-          <% if active_user.present? %>
+          <!-- Forms Dropdown Menu (Triggers authenticated? to resume session) -->
+          <% if authenticated? %>
             <div class="relative group flex items-center h-full cursor-pointer">
               <span class="text-[#7973A8] group-hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 flex items-center">
                 Forms
@@ -101,12 +103,9 @@
               <!-- Submenu Dropdown -->
               <div class="absolute left-0 top-full pt-1 hidden group-hover:block z-50">
                 <div class="bg-white border border-[#EAEFFC] rounded-md shadow-lg py-1 min-w-[180px]">
-                  <% target_injury_path = begin
-                       is_admin = active_user.try(:admin?) || (active_user.try(:role) == "admin")
-                       is_admin ? injury_reports_path : report_injury_path
-                     rescue StandardError
-                       report_injury_path
-                     end %>
+                  <% active_usr = current_user || Current.user %>
+                  <% is_admin = active_usr.try(:admin?) || (active_usr.try(:role) == "admin") %>
+                  <% target_injury_path = is_admin ? injury_reports_path : report_injury_path %>
                   <% is_current = begin
                        current_page?(target_injury_path)
                      rescue StandardError, NameError
@@ -127,14 +126,15 @@
           <!-- Divider -->
           <div class="w-px h-6 bg-[#EAEFFC] self-center"></div>
 
-          <%# Assumes a user is logged in %>
-          <% current_user_email = @user&.email_address || @user&.email || (defined?(Current) && (Current.user&.email_address || Current.user&.email)) %>
-          <% if current_user_email.present? %>
-            <span class="bg-[#F0F2FC] border border-[#E0E3F6] px-3 py-1.5 rounded-md text-xs text-[#4C4682] font-semibold flex items-center self-center">
-              <%= current_user_email %>
-            </span>
-          <% end %>
-          <% if @user.present? %>
+          <%# Uses Current.user populated by authenticated? %>
+          <% active_usr = current_user || (defined?(Current) && Current.user) %>
+          <% if active_usr.present? %>
+            <% current_user_email = active_usr.try(:email_address) || active_usr.try(:email) %>
+            <% if current_user_email.present? %>
+              <span class="bg-[#F0F2FC] border border-[#E0E3F6] px-3 py-1.5 rounded-md text-xs text-[#4C4682] font-semibold flex items-center self-center">
+                <%= current_user_email %>
+              </span>
+            <% end %>
             <%= button_to "Log Out", logout_path, method: :delete, class: "bg-transparent border-0 text-[#8C87B3] hover:text-[#685FD6] text-[0.85rem] font-semibold p-0 transition-colors duration-200 cursor-pointer flex items-center h-full", form_class: "m-0 flex items-center h-full" %>
           <% end %>
         </div>
