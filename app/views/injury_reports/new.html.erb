@@ -1,2 +1,125 @@
-<h1>InjuryReports#new</h1>
-<p>Find me in app/views/injury_reports/new.html.erb</p>
+<% content_for :title, "Report an Injury - SHENEFELT.ORG" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[640px]">
+    <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)] sm:p-10">
+      <div class="mb-8 text-center">
+        <h1 class="m-0 mb-1.5 text-2xl font-bold tracking-tight text-[#4C4682]">
+          Report an Injury
+        </h1>
+        <p class="m-0 text-sm font-medium text-[#7973A8]">
+          Submit details below. A notification email will be sent after you report.
+        </p>
+      </div>
+
+      <% if flash[:notice].present? %>
+        <div class="mb-6 rounded-lg border border-[#C7D2FE] bg-[#EEF0FD] px-4 py-3 text-sm font-medium text-[#4C4682]">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <% if flash[:alert].present? %>
+        <div class="mb-6 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm font-medium text-red-800">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @injury_report, local: true, class: "space-y-5 text-left" do |f| %>
+        <% if @injury_report.errors.any? %>
+          <div class="rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm text-red-800">
+            <p class="mb-2 font-semibold">
+              <%= pluralize(@injury_report.errors.count, "error") %> prevented this report from being submitted:
+            </p>
+            <ul class="m-0 list-disc space-y-1 pl-5">
+              <% @injury_report.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <% if logged_in_reporter? %>
+          <%= f.hidden_field :name %>
+          <%= f.hidden_field :email %>
+
+          <div class="rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-4 py-3">
+            <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">
+              Reporting as
+            </p>
+            <p class="m-0 text-sm font-semibold text-[#4C4682]">
+              <%= @injury_report.name.presence || "Signed-in user" %>
+            </p>
+            <p class="m-0 text-sm font-medium text-[#7973A8]">
+              <%= @injury_report.email %>
+            </p>
+          </div>
+        <% else %>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <%= f.label :name, "Your name", class: field_label_classes %>
+              <%= f.text_field :name, required: true, class: field_input_classes, placeholder: "Jane Doe" %>
+            </div>
+
+            <div>
+              <%= f.label :email, "Your email", class: field_label_classes %>
+              <%= f.email_field :email, required: true, class: field_input_classes, placeholder: "you@example.com" %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <%= f.label :phone, "Phone (optional)", class: field_label_classes %>
+            <%= f.telephone_field :phone, class: field_input_classes, placeholder: "(555) 555-5555" %>
+          </div>
+
+          <div>
+            <%= f.label :injured_person, "Name of injured person", class: field_label_classes %>
+            <%= f.text_field :injured_person, required: true, class: field_input_classes, placeholder: "Full name" %>
+          </div>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <%= f.label :incident_date, "Date of incident", class: field_label_classes %>
+            <%= f.date_field :incident_date, required: true, max: Date.current, class: field_input_classes %>
+          </div>
+
+          <div>
+            <%= f.label :severity, "Severity", class: field_label_classes %>
+            <%= f.select :severity,
+                  InjuryReport::SEVERITIES.map { |s| [s.titleize, s] },
+                  { include_blank: "Select severity" },
+                  class: field_input_classes %>
+          </div>
+        </div>
+
+        <div>
+          <%= f.label :location, "Location of incident", class: field_label_classes %>
+          <%= f.text_field :location, required: true, class: field_input_classes, placeholder: "Building, room, job site, etc." %>
+        </div>
+
+        <div>
+          <%= f.label :description, "Describe what happened", class: field_label_classes %>
+          <%= f.text_area :description,
+                rows: 6,
+                required: true,
+                class: "#{field_input_classes} min-h-[140px] resize-y",
+                placeholder: "What happened, injuries sustained, first aid given, witnesses, etc." %>
+          <p class="mt-1.5 text-xs font-medium text-[#8C87B3]">
+            Include enough detail for follow-up (minimum 20 characters).
+          </p>
+        </div>
+
+        <div class="pt-2">
+          <%= f.submit "Submit injury report",
+                class: "w-full cursor-pointer rounded-lg border-0 bg-[#685FD6] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#554CBF] focus:outline-none focus:ring-2 focus:ring-[#685FD6] focus:ring-offset-2" %>
+        </div>
+      <% end %>
+    </div>
+
+    <p class="mt-6 text-center text-xs font-medium text-[#8C87B3]">
+      For emergencies, call local emergency services first.
+    </p>
+  </div>
+</div>

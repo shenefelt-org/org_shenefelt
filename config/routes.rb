@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  get "injury_reports/new"
-  get "injury_reports/create"
+# Injury reports
+resources :injury_reports, only: [ :index, :show, :create ], path: "injury-reports"
+get "report-injury", to: "injury_reports#new", as: :report_injury
+
   # resources :portfolios
   resources :client_contacts
   resources :funko_pops, path: "funko"
@@ -12,7 +14,6 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
   resources :evolution_chains
-  resources :pokedexes, path: "pokedex"
   resources :pokemons, path: "pokemon"
   get "home/index"
   get "about", to: "home#about"

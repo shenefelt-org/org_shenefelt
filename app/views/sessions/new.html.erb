@@ -1,98 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Sign In - Shenefelt</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #F8F9FE;
-      color: #2D2B4A;
-    }
+<div class="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-[#F8F9FE] px-4 py-10 text-[#2D2B4A]">
+  <div class="w-full max-w-[380px] rounded-xl border border-[#EAEFFC] bg-white p-10 text-center shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    <h1 class="m-0 mb-1.5 text-2xl font-semibold tracking-tight text-[#4C4682]">
+      Sign In
+    </h1>
 
-    .login-card {
-      background: #FFFFFF;
-      padding: 2.5rem;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 380px;
-      border: 1px solid #EAEFFC;
-      box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-      box-sizing: border-box;
-      text-align: center;
-    }
-
-    .login-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #4C4682;
-      margin: 0 0 0.35rem 0;
-      letter-spacing: -0.02em;
-    }
-
-    .login-subtitle {
-      color: #7973A8;
-      font-size: 0.875rem;
-      margin: 0 0 1.75rem 0;
-    }
-
-    .flash-message {
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      margin-bottom: 1.25rem;
-      text-align: left;
-    }
-
-    .flash-alert {
-      background: #FEE2E2;
-      color: #991B1B;
-      border: 1px solid #FCA5A5;
-    }
-
-    .flash-notice {
-      background: #EEF0FD;
-      color: #4C4682;
-      border: 1px solid #C7D2FE;
-    }
-
-    .btn-sso {
-      display: block;
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: #685FD6;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.875rem;
-      text-decoration: none;
-      box-sizing: border-box;
-      transition: background 0.2s ease;
-    }
-
-    .btn-sso:hover {
-      background: #554CBF;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-card">
-    <h1 class="login-title">Sign In</h1>
-    <p class="login-subtitle">Validate with SSO</p>
+    <p class="mb-7 mt-0 text-sm text-[#7973A8]">
+      Validate with SSO
+    </p>
 
     <% if flash[:alert].present? %>
-      <p class="flash-message flash-alert"><%= flash[:alert] %></p>
-    <% end %>
-    <% if flash[:notice].present? %>
-      <p class="flash-message flash-notice"><%= flash[:notice] %></p>
+      <p class="mb-5 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-left text-sm text-red-800">
+        <%= flash[:alert] %>
+      </p>
     <% end %>
 
-    <%= link_to "SSO Auth Gateway", openid_connect_path, class: "btn-sso", data: { turbo: false } %>
+    <% if flash[:notice].present? %>
+      <p class="mb-5 rounded-lg border border-indigo-200 bg-[#EEF0FD] px-4 py-3 text-left text-sm text-[#4C4682]">
+        <%= flash[:notice] %>
+      </p>
+    <% end %>
+
+    <%= link_to "SSO Auth Gateway",
+          openid_connect_path,
+          class: "block w-full rounded-lg bg-[#685FD6] px-4 py-3 text-sm font-medium text-white no-underline transition-colors hover:bg-[#554CBF]",
+          data: { turbo: false } %>
   </div>
-</body>
-</html>
+</div>

@@ -1,3 +1,20 @@
-InjuryReport#new_report
+SHENEFELT.ORG — New Injury Report
+================================
 
-<%= @greeting %>, find me in app/views/injury_report_mailer/new_report.text.erb
+Severity: <%= @injury_report.severity.presence&.titleize || "Not specified" %>
+
+Submitted by: <%= @injury_report.name %>
+Email: <%= @injury_report.email %>
+Phone: <%= @injury_report.phone.presence || "No phone provided" %>
+
+Injured person: <%= @injury_report.injured_person %>
+Incident date: <%= @injury_report.incident_date %>
+Location: <%= @injury_report.location %>
+
+Description
+-----------
+<%= @injury_report.description %>
+
+--
+Sent automatically from SHENEFELT.ORG
+Reply to this email to contact the submitter

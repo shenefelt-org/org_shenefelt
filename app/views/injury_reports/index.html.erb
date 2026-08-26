@@ -1,0 +1,93 @@
+<% content_for :title, "Injury Reports - SHENEFELT.ORG" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[1000px]">
+    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h1 class="m-0 mb-1.5 text-2xl font-bold tracking-tight text-[#4C4682]">
+          Injury Reports
+        </h1>
+        <p class="m-0 text-sm font-medium text-[#7973A8]">
+          <%= pluralize(@injury_reports.size, "submission") %> total
+        </p>
+      </div>
+
+      <%= link_to "New report",
+            report_injury_path,
+            class: "inline-flex items-center justify-center rounded-lg bg-[#685FD6] px-4 py-2.5 text-sm font-semibold text-white no-underline transition-colors duration-200 hover:bg-[#554CBF]" %>
+    </div>
+
+    <% if flash[:notice].present? %>
+      <div class="mb-6 rounded-lg border border-[#C7D2FE] bg-[#EEF0FD] px-4 py-3 text-sm font-medium text-[#4C4682]">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+      <div class="mb-6 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm font-medium text-red-800">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <div class="overflow-hidden rounded-xl border border-[#EAEFFC] bg-white shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+      <% if @injury_reports.any? %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b border-[#EAEFFC] bg-[#F0F2FC]">
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Submitted</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Injured person</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Incident date</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Location</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Severity</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]">Reporter</th>
+                <th class="px-4 py-3 font-semibold text-[#4C4682]"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @injury_reports.each do |report| %>
+                <tr class="border-b border-[#EAEFFC] last:border-b-0 hover:bg-[#FAFBFD]">
+                  <td class="px-4 py-3 align-top text-[#7973A8]">
+                    <%= report.created_at.strftime("%b %d, %Y") %><br>
+                    <span class="text-xs"><%= report.created_at.strftime("%I:%M %p") %></span>
+                  </td>
+                  <td class="px-4 py-3 align-top font-semibold text-[#2D2B4A]">
+                    <%= report.injured_person %>
+                  </td>
+                  <td class="px-4 py-3 align-top text-[#2D2B4A]">
+                    <%= report.incident_date&.strftime("%b %d, %Y") || "—" %>
+                  </td>
+                  <td class="px-4 py-3 align-top text-[#2D2B4A]">
+                    <%= truncate(report.location.to_s, length: 40) %>
+                  </td>
+                  <td class="px-4 py-3 align-top">
+                    <span class="inline-flex rounded-md border px-2 py-1 text-xs font-semibold <%= severity_pill_classes(report.severity) %>">
+                      <%= report.severity.present? ? report.severity.titleize : "Unspecified" %>
+                    </span>
+                  </td>
+                  <td class="px-4 py-3 align-top">
+                    <div class="font-medium text-[#2D2B4A]"><%= report.name %></div>
+                    <div class="text-xs text-[#7973A8]"><%= report.email %></div>
+                  </td>
+                  <td class="px-4 py-3 align-top text-right">
+                    <%= link_to "View",
+                          injury_report_path(report),
+                          class: "text-sm font-semibold text-[#685FD6] no-underline hover:text-[#554CBF]" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="px-6 py-16 text-center">
+          <p class="m-0 mb-2 text-base font-semibold text-[#4C4682]">No injury reports yet</p>
+          <p class="m-0 mb-6 text-sm text-[#7973A8]">Submissions will show up here after the form is used.</p>
+          <%= link_to "Create first report",
+                report_injury_path,
+                class: "inline-flex rounded-lg bg-[#685FD6] px-4 py-2.5 text-sm font-semibold text-white no-underline hover:bg-[#554CBF]" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

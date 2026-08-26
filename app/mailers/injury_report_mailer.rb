@@ -1,12 +1,12 @@
 class InjuryReportMailer < ApplicationMailer
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.injury_report_mailer.new_report.subject
-  #
-  def new_report
-    @greeting = "Hi"
 
-    mail to: "to@example.org"
+  def new_report(injury_report)
+    @injury_report = injury_report
+
+    mail(
+      to: "greg@shenefelt.org", # change to your inbox
+      reply_to: @injury_report.email,
+      subject: "Injury Report: #{@injury_report.injured_person} (#{@injury_report.severity.presence || 'unspecified'})"
+    )
   end
 end

@@ -1,0 +1,109 @@
+<% content_for :title, "Injury Report ##{@injury_report.id} - SHENEFELT.ORG" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[720px]">
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <%= link_to "← Back to index",
+            injury_reports_path,
+            class: "text-sm font-semibold text-[#7973A8] no-underline transition-colors duration-200 hover:text-[#685FD6]" %>
+
+      <div class="flex items-center gap-2">
+        <% if @previous_injury_report %>
+          <%= link_to "← Previous",
+                injury_report_path(@previous_injury_report),
+                class: "inline-flex items-center rounded-lg border border-[#EAEFFC] bg-white px-3 py-2 text-sm font-semibold text-[#4C4682] no-underline shadow-[0_1px_2px_rgba(104,95,214,0.04)] transition-colors duration-200 hover:border-[#685FD6] hover:text-[#685FD6]" %>
+        <% else %>
+          <span class="inline-flex items-center rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-3 py-2 text-sm font-semibold text-[#8C87B3]">
+            ← Previous
+          </span>
+        <% end %>
+
+        <% if @next_injury_report %>
+          <%= link_to "Next →",
+                injury_report_path(@next_injury_report),
+                class: "inline-flex items-center rounded-lg border border-[#EAEFFC] bg-white px-3 py-2 text-sm font-semibold text-[#4C4682] no-underline shadow-[0_1px_2px_rgba(104,95,214,0.04)] transition-colors duration-200 hover:border-[#685FD6] hover:text-[#685FD6]" %>
+        <% else %>
+          <span class="inline-flex items-center rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-3 py-2 text-sm font-semibold text-[#8C87B3]">
+            Next →
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)] sm:p-10">
+      <div class="mb-8 flex flex-col gap-3 border-b border-[#EAEFFC] pb-6 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <h1 class="m-0 mb-1.5 text-2xl font-bold tracking-tight text-[#4C4682]">
+            <%= @injury_report.injured_person %>
+          </h1>
+          <p class="m-0 text-sm font-medium text-[#7973A8]">
+            Submitted <%= @injury_report.created_at.strftime("%b %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+
+        <span class="inline-flex w-fit rounded-md border px-3 py-1.5 text-xs font-semibold <%= severity_pill_classes(@injury_report.severity) %>">
+          <%= @injury_report.severity.present? ? @injury_report.severity.titleize : "Severity unspecified" %>
+        </span>
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">Incident date</p>
+          <p class="m-0 text-sm font-semibold text-[#2D2B4A]">
+            <%= @injury_report.incident_date&.strftime("%b %d, %Y") || "—" %>
+          </p>
+        </div>
+
+        <div>
+          <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">Location</p>
+          <p class="m-0 break-words text-sm font-semibold text-[#2D2B4A] [overflow-wrap:anywhere]">
+            <%= @injury_report.location %>
+          </p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">Reporter</p>
+          <p class="m-0 break-words text-sm font-semibold text-[#2D2B4A]"><%= @injury_report.name %></p>
+          <p class="m-0 break-words text-sm text-[#7973A8] [overflow-wrap:anywhere]"><%= @injury_report.email %></p>
+          <% if @injury_report.phone.present? %>
+            <p class="m-0 text-sm text-[#7973A8]"><%= @injury_report.phone %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <p class="mb-2 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">Description</p>
+        <div class="overflow-hidden rounded-lg border border-[#EAEFFC] bg-[#EEF0FD] px-4 py-3 text-sm leading-relaxed text-[#2D2B4A] break-words whitespace-pre-wrap [overflow-wrap:anywhere] [&_p]:m-0 [&_p]:break-words [&_p]:[overflow-wrap:anywhere]">
+          <%= simple_format(@injury_report.description) %>
+        </div>
+      </div>
+    </div>
+
+    <%# Bottom nav too, handy on long descriptions %>
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <% if @previous_injury_report %>
+        <%= link_to "Previous report",
+              injury_report_path(@previous_injury_report),
+              class: "inline-flex items-center justify-center rounded-lg border border-[#EAEFFC] bg-white px-4 py-2.5 text-sm font-semibold text-[#4C4682] no-underline transition-colors duration-200 hover:border-[#685FD6] hover:text-[#685FD6]" %>
+      <% else %>
+        <span class="inline-flex items-center justify-center rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-4 py-2.5 text-sm font-semibold text-[#8C87B3]">
+          Previous report
+        </span>
+      <% end %>
+
+      <%= link_to "Back to Reports",
+            injury_reports_path,
+            class: "inline-flex items-center justify-center rounded-lg bg-[#685FD6] px-4 py-2.5 text-sm font-semibold text-white no-underline transition-colors duration-200 hover:bg-[#554CBF]" %>
+
+      <% if @next_injury_report %>
+        <%= link_to "Next report",
+              injury_report_path(@next_injury_report),
+              class: "inline-flex items-center justify-center rounded-lg border border-[#EAEFFC] bg-white px-4 py-2.5 text-sm font-semibold text-[#4C4682] no-underline transition-colors duration-200 hover:border-[#685FD6] hover:text-[#685FD6]" %>
+      <% else %>
+        <span class="inline-flex items-center justify-center rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-4 py-2.5 text-sm font-semibold text-[#8C87B3]">
+          Next report
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
