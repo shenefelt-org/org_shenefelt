@@ -1,4 +1,5 @@
 class FunkoPopsController < ApplicationController
+    allow_unauthenticated_access only: [ :index, :show ]
 
     def index
         @funko_pops = FunkoPop.all

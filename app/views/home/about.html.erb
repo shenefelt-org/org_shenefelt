@@ -1,69 +1,53 @@
-<% content_for :title, "About - Shenefelt" %>
-
-<style>
-  .main-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 70px);
-    padding: 2rem;
-    box-sizing: border-box;
-    font-family: "Menlo", monospace, "Courier New", Courier, monospace;
-  }
-
-  .card {
-    background: #FFFFFF;
-    padding: 2.5rem;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    box-sizing: border-box;
-  }
-
-  h2 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    color: #4C4682;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  p {
-    color: #7973A8;
-    font-size: 0.875rem;
-    line-height: 1.5;
-    margin: 0 0 1rem 0;
-  }
-
-  .btn-secondary {
-    display: block;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    background: #EEF0FD;
-    color: #685FD6;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-    margin-top: 1.5rem;
-  }
-
-  .btn-secondary:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-  }
-</style>
-
-<div class="main-content-wrapper">
-  <div class="card">
-    <h2>About</h2>
-    <p>Welcome to Shenefelt. This platform handles cloud storage integrations, Pokemon data tracking, and internal utilities.</p>
-    
-    <a href="/" class="btn-secondary">Back to Dashboard</a>
+<% content_for :title, "About Me - Shenefelt" %>
+<div class="max-w-[750px] my-12 mx-auto font-sans text-[#2D2B4A] px-4 sm:px-0">
+  <div class="bg-white p-6 sm:p-10 rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    <!-- Profile & Header Section -->
+    <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 pb-8 mb-8 border-b border-[#EEF0FD] text-center sm:text-left">
+      <!-- Circular Image Container -->
+      <div class="relative shrink-0">
+        <%= image_tag "profile.jpg", 
+              alt: "Greg Shenefelt", 
+              class: "w-44 h-44 rounded-full object-cover object-[20%_85%] border-4 border-[#EEF0FD] shadow-md bg-[#F8F9FE]" %>
+      </div>
+      <div class="space-y-2">
+        <h1 class="text-3xl font-semibold text-[#4C4682] tracking-tight m-0">Greg Shenefelt</h1>
+        <p class="text-sm font-semibold text-[#685FD6] m-0">Snazzy software engineer with a BS in Computer Science from the University of Oregon </p>
+        <p class="text-xs text-[#7973A8] leading-relaxed max-w-md m-0 pt-1">
+          Building modern web applications with Ruby on Rails, Tailwind CSS, clean API integrations, and refined user interfaces.
+        </p>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="space-y-6">
+      <div>
+        <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-2">Background & Focus</span>
+        <p class="text-sm text-[#4A4668] leading-relaxed m-0">
+          I specialize in full-stack Ruby on Rails development with a heavy emphasis on responsive UI design, database integrations, and clean architectural patterns. 
+        </p>
+      </div>
+      <!-- Personal Interests Grid -->
+      <div class="p-5 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg">
+        <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-3">Beyond the Code</span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+          <div class="p-3 bg-white rounded-lg border border-[#EAEFFC]">
+            <span class="block font-semibold text-[#4C4682] mb-1">Pop Culture & Gaming</span>
+            <span class="text-[#7973A8] leading-normal block">Collector of Pokémon, Kirby, and Funko figures[cite: 1].</span>
+          </div>
+          <div class="p-3 bg-white rounded-lg border border-[#EAEFFC]">
+            <span class="block font-semibold text-[#4C4682] mb-1">Bookshelf Favorites</span>
+            <span class="text-[#7973A8] leading-normal block">Reading works by Chuck Palahniuk[cite: 1] and productivity literature[cite: 1].</span>
+          </div>
+          <div class="p-3 bg-white rounded-lg border border-[#EAEFFC]">
+            <span class="block font-semibold text-[#4C4682] mb-1">Design & Aesthetics</span>
+            <span class="text-[#7973A8] leading-normal block">Crafting cohesive color systems and intuitive user layouts.</span>
+          </div>
+        </div>
+      </div>
+      <!-- Action Navigation -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-[#EEF0FD]">
+        <%= link_to "← Back to Portfolio", portfolio_path, class: "w-full sm:w-auto inline-flex items-center justify-center h-10 px-4 text-xs font-semibold text-[#7973A8] bg-[#F0F2FC] rounded-lg hover:bg-[#E0E3F6] hover:text-[#4C4682] transition-colors no-underline" %>
+        <%= link_to "Get in Touch", new_contact_path, class: "w-full sm:w-auto inline-flex items-center justify-center h-10 px-5 text-xs font-semibold text-white bg-[#685FD6] rounded-lg hover:bg-[#554CBF] transition-colors no-underline shadow-sm" %>
+      </div>
+    </div>
   </div>
 </div>

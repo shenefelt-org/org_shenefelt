@@ -12,6 +12,7 @@ module R2ServiceHelper
       force_path_style: true
     )
   end
+  
 
   def self.bucket
     Rails.application.credentials.dig(:r2, :bucket)

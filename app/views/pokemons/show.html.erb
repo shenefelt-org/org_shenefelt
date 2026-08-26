@@ -1,149 +1,135 @@
-<% content_for :title, "Pokemon Details" %>
+<% content_for :title, "#{@pokemon.name.capitalize} Details - Shenefelt" %>
 
-<style>
-  .show-wrapper {
-    max-width: 600px;
-    margin: 3rem auto;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #2D2B4A;
-  }
-
-  .flash-message {
-    background: #F0F2FC;
-    border: 1px solid #E0E3F6;
-    padding: 1rem 1.5rem;
-    border-radius: 8px;
-    color: #4C4682;
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-
-  .card {
-    background: #FFFFFF;
-    padding: 2.5rem;
-    border-radius: 12px;
-    border: 1px solid #EAEFFC;
-    box-shadow: 0 4px 20px rgba(104, 95, 214, 0.05);
-    box-sizing: border-box;
-  }
-
-  .show-header {
-    border-bottom: 1px solid #EAEFFC;
-    padding-bottom: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .show-title {
-    margin: 0;
-    color: #4C4682;
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  .pokemon-content {
-    margin-bottom: 2.5rem;
-  }
-
-  /* Action Buttons */
-  .action-group {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    border-top: 1px solid #EAEFFC;
-    padding-top: 1.5rem;
-  }
-
-  .btn {
-    display: inline-block;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    background: #685FD6;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn:hover {
-    background: #554CBF;
-  }
-
-  .btn-secondary {
-    display: inline-block;
-    background: #EEF0FD;
-    color: #685FD6;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-secondary:hover {
-    background: #685FD6;
-    color: #FFFFFF;
-  }
-
-  .btn-danger {
-    display: inline-block;
-    background: #FFF0F0;
-    color: #D32F2F;
-    text-align: center;
-    padding: 0.65rem 1.15rem;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    border: none;
-    cursor: pointer;
-  }
-
-  .btn-danger:hover {
-    background: #D32F2F;
-    color: #FFFFFF;
-  }
-
-  /* Right-aligns the delete button in the flex row */
-  .delete-form {
-    margin-left: auto;
-  }
-</style>
-
-<div class="show-wrapper">
+<div class="max-w-[650px] my-12 mx-auto font-sans text-[#2D2B4A] px-4 sm:px-0">
   
   <% if notice.present? %>
-    <div class="flash-message">
+    <div class="p-4 rounded-lg bg-[#EEF0FD] border border-[#E0E3F6] text-[#4C4682] text-sm font-medium mb-6">
       <%= notice %>
     </div>
   <% end %>
 
-  <div class="card">
-    <div class="show-header">
-      <h1 class="show-title">Pokemon Details</h1>
+  <div class="bg-white p-6 md:p-8 rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    
+    <!-- Header -->
+    <div class="border-b border-[#EEF0FD] pb-5 mb-6 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-semibold text-[#4C4682] tracking-tight m-0 capitalize">
+          <%= @pokemon.name %>
+        </h1>
+        <% if @pokemon.respond_to?(:pokedex) && @pokemon.pokedex&.version_name.present? %>
+          <p class="text-xs text-[#7973A8] mt-1 m-0">
+            Pokémon <%= @pokemon.pokedex.version_name.capitalize %> Version
+          </p>
+        <% end %>
+      </div>
+      <span class="px-3 py-1 bg-[#F0F2FC] border border-[#E0E3F6] text-[#685FD6] text-xs font-mono rounded-full font-semibold">
+        #<%= @pokemon.id %>
+      </span>
     </div>
 
-    <div class="pokemon-content">
-      <%# Renders your _pokemon.html.erb partial %>
-      <%= render @pokemon %>
-    </div>
-
-    <div class="action-group">
-      <%= link_to "Edit", edit_pokemon_path(@pokemon), class: "btn" %>
-      <%= link_to "Back to Pokemons", pokemons_path, class: "btn-secondary" %>
+    <div class="space-y-6 mb-8">
       
-      <%= button_to "Delete", @pokemon, method: :delete, class: "btn-danger", form_class: "delete-form", form: { data: { turbo_confirm: 'Are you sure you want to delete this Pokemon?' } } %>
+      <!-- Styled Metadata Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <% if @pokemon.respond_to?(:game_idx) && @pokemon.game_idx.present? %>
+          <div class="p-4 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg">
+            <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-0.5">Game Index</span>
+            <span class="text-sm font-semibold text-[#4C4682] font-mono"><%= @pokemon.game_idx %></span>
+          </div>
+        <% end %>
+
+        <% if @pokemon.respond_to?(:url) && @pokemon.url.present? %>
+          <div class="p-4 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg">
+            <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-0.5">PokeAPI Resource</span>
+            <a href="<%= @pokemon.url %>" target="_blank" rel="noopener" class="text-xs font-medium text-[#685FD6] hover:underline flex items-center gap-1 truncate">
+              View JSON Endpoint 
+            </a>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Pokédex Flavor Text Entry Card -->
+      <% if @pokemon.respond_to?(:pokedex) && @pokemon.pokedex&.flavor_text.present? %>
+        <div class="p-5 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg">
+          <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-1.5">
+            Pokédex Entry
+          </span>
+          <p class="text-sm text-[#4A4668] leading-relaxed italic m-0">
+            "<%= @pokemon.pokedex.flavor_text.squish %>"
+          </p>
+        </div>
+      <% end %>
+
+      <!-- Sprite Image & Audio Card -->
+      <div class="p-5 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg space-y-4">
+        
+        <!-- Sprite Image & URL -->
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <% if @pokemon.sprite_url.present? %>
+            <div class="w-24 h-24 bg-white border border-[#EAEFFC] rounded-lg p-2 flex items-center justify-center shrink-0 shadow-sm">
+              <img src="<%= @pokemon.sprite_url %>" alt="<%= @pokemon.name %> sprite" class="w-full h-full object-contain" />
+            </div>
+          <% end %>
+
+          <div class="flex-1 w-full overflow-hidden">
+            <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-1">
+              Sprite URL
+            </span>
+            <p class="text-xs font-mono text-[#685FD6] break-all bg-white p-3 rounded-md border border-[#EAEFFC] m-0 leading-normal select-all">
+              <%= @pokemon.sprite_url.presence || "No sprite URL available" %>
+            </p>
+          </div>
+        </div>
+
+        <!-- Cry Audio Player -->
+        <% if @pokemon.cry_url.present? %>
+          <div class="pt-4 border-t border-[#EEF0FD]">
+            <span class="block text-[0.725rem] font-semibold uppercase text-[#7973A8] tracking-wider mb-2">
+              Pokémon Cry Audio
+            </span>
+            <audio controls class="w-full h-9 rounded-md border border-[#E0E3F6]">
+              <source src="<%= @pokemon.cry_url %>" type="audio/ogg">
+              <source src="<%= @pokemon.cry_url %>" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <p class="text-[0.7rem] font-mono text-[#7973A8] break-all mt-1.5 m-0 select-all">
+              <%= @pokemon.cry_url %>
+            </p>
+          </div>
+        <% end %>
+
+      </div>
     </div>
+
+    <!-- Navigation & Action Buttons -->
+    <% 
+      next_pokemon = @next_pokemon || Pokemon.where("id > ?", @pokemon.id).first
+      prev_pokemon = @previous_pokemon || Pokemon.where("id < ?", @pokemon.id).last
+    %>
+    
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-[#EEF0FD]">
+      
+      <!-- Left: Navigation Group -->
+      <div class="flex items-center gap-2">
+        <%= link_to "All Pokemons", pokemons_path, class: "inline-flex items-center justify-center h-10 px-3.5 text-xs font-semibold text-[#7973A8] bg-[#F0F2FC] rounded-lg hover:bg-[#E0E3F6] hover:text-[#4C4682] transition-colors no-underline" %>
+
+        <% if prev_pokemon.present? %>
+          <%= link_to "Prev", pokemon_path(prev_pokemon), class: "inline-flex items-center justify-center h-10 px-3.5 text-xs font-semibold text-[#685FD6] bg-[#EEF0FD] rounded-lg hover:bg-[#685FD6] hover:text-white transition-colors no-underline" %>
+        <% end %>
+
+        <% if next_pokemon.present? %>
+          <%= link_to "Next", pokemon_path(next_pokemon), class: "inline-flex items-center justify-center h-10 px-4 text-xs font-semibold text-white bg-[#685FD6] rounded-lg hover:bg-[#554CBF] transition-colors no-underline shadow-sm" %>
+        <% end %>
+      </div>
+
+      <!-- Right: Action Group -->
+      <div class="flex items-center gap-2 sm:ml-auto">
+        <%= link_to "Edit", edit_pokemon_path(@pokemon), class: "inline-flex items-center justify-center h-10 px-4 text-xs font-semibold text-[#685FD6] bg-[#EEF0FD] rounded-lg hover:bg-[#685FD6] hover:text-white transition-colors no-underline" %>
+        
+        <%= button_to "Delete", @pokemon, method: :delete, class: "inline-flex items-center justify-center h-10 px-4 text-xs font-semibold text-[#D32F2F] bg-[#FFF0F0] rounded-lg border-0 cursor-pointer hover:bg-[#D32F2F] hover:text-white transition-colors", form_class: "m-0 flex", form: { data: { turbo_confirm: "Are you sure you want to delete this Pokemon?" } } %>
+      </div>
+
+    </div>
+
   </div>
 </div>

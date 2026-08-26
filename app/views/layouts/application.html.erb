@@ -27,7 +27,6 @@
         }
       }
     </script>
-
     <%# set site favicon to random pokemon sprite %>
     <%= favicon_link_tag get_random_sprite_url %>
     <%# Includes all stylesheet files in app/assets/stylesheets %>
@@ -46,7 +45,7 @@
         <%# Right side: Links and User Actions %>
         <div class="flex items-center gap-6 h-full">
           <% unless current_page?(root_path) %>
-            <%= link_to "Dashboard", root_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+            <%= link_to "About Me", root_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
           <% end %>
           <!-- Projects Dropdown Menu -->
           <div class="relative group flex items-center h-full cursor-pointer">
@@ -64,10 +63,7 @@
                   <%= link_to "All Projects", portfolio_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
                 <% end %>
                 <% unless current_page?(pokemons_path) %>
-                  <%= link_to "Pokemon Base Info", pokemons_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
-                <% end %>
-                <% unless current_page?(pokedexes_path) %>
-                  <%= link_to "Pokedex", pokedexes_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
+                  <%= link_to "Pokemon Info", pokemons_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
                 <% end %>
                 <% unless current_page?(ip_path) %>
                   <%= link_to "Public IP", ip_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
@@ -101,7 +97,9 @@
               <%= current_user_email %>
             </span>
           <% end %>
-          <%= button_to "Log Out", logout_path, method: :delete, class: "bg-transparent border-0 text-[#8C87B3] hover:text-[#685FD6] text-[0.85rem] font-semibold p-0 transition-colors duration-200 cursor-pointer flex items-center h-full", form_class: "m-0 flex items-center h-full" %>
+          <% if @user.present? %>
+            <%= button_to "Log Out", logout_path, method: :delete, class: "bg-transparent border-0 text-[#8C87B3] hover:text-[#685FD6] text-[0.85rem] font-semibold p-0 transition-colors duration-200 cursor-pointer flex items-center h-full", form_class: "m-0 flex items-center h-full" %>
+          <% end %>
         </div>
       </div>
     </nav>

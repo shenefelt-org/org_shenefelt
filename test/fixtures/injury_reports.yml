@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  email: MyString
+  phone: MyString
+  injured_person: MyString
+  incident_date: 2026-08-26
+  location: MyString
+  description: MyText
+  severity: MyString
+
+two:
+  name: MyString
+  email: MyString
+  phone: MyString
+  injured_person: MyString
+  incident_date: 2026-08-26
+  location: MyString
+  description: MyText
+  severity: MyString

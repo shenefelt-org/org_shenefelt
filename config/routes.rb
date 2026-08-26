@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :portfolios
+  get "injury_reports/new"
+  get "injury_reports/create"
+  # resources :portfolios
   resources :client_contacts
   resources :funko_pops, path: "funko"
   resources :contacts, path: "contact"
@@ -14,9 +16,13 @@ Rails.application.routes.draw do
   resources :pokemons, path: "pokemon"
   get "home/index"
   get "about", to: "home#about"
-  get "portfolio", to: "home#portfolio", as: :portfolio
+  # get "portfolio", to: "home#portfolio", as: :portfolio
   # use as: to create a path. so here we have ip_path now
   get "ip", to: "home#ip", as: :ip
+
+  # portfolio routes
+  get "portfolio", to: "portfolios#index", as: :portfolio
+  get "portfolio/pub-ip", to: "portfolios#ip_addr", as: :public_ip
 
 
   # Health Check
@@ -53,5 +59,5 @@ Rails.application.routes.draw do
 
 
   # Root Landing Page
-  root "home#index"
+  root "home#about"
 end

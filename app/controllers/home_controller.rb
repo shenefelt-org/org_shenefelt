@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  allow_unauthenticated_access only: [:ip]
+  allow_unauthenticated_access only: [ :ip, :about ]
   
   def index
     # Current.user is automatically populated by Rails 8 authentication

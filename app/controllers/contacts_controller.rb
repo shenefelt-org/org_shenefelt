@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
-  before_action :set_contact, only: [:show, :edit, :update, :destroy]
+  allow_unauthenticated_access only: [ :new, :create ]
+  before_action :set_contact, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @contacts = Contact.all.order(created_at: :desc)

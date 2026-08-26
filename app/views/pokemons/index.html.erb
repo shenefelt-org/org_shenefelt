@@ -1,61 +1,88 @@
-<% content_for :title, "Pokemon Info" %>
+<% content_for :title, "Pokemon Directory - Shenefelt" %>
 
-<div class="mx-auto my-12 max-w-[800px] text-[#2D2B4A] font-['Railway',ui-sans-serif,system-ui,sans-serif]">
+<div class="max-w-[800px] my-12 mx-auto font-sans text-[#2D2B4A] px-4 sm:px-0">
+  
   <% if notice.present? %>
-    <div class="mb-8 rounded-lg border border-[#E0E3F6] bg-[#F0F2FC] px-6 py-4 text-sm font-medium text-[#4C4682]">
+    <div class="p-4 rounded-lg bg-[#EEF0FD] border border-[#E0E3F6] text-[#4C4682] text-sm font-medium mb-6">
       <%= notice %>
     </div>
   <% end %>
 
-  <div class="mb-6 flex items-center justify-between">
-    <h1 class="m-0 text-2xl font-semibold tracking-tight text-[#4C4682]">
-      Pokemons
-    </h1>
-    <div>
-      <%= link_to "New Pokemon", new_pokemon_path,
-            class: "box-border inline-block rounded-lg bg-[#685FD6] px-[1.15rem] py-[0.65rem] text-sm font-medium text-white no-underline transition-all duration-200 ease-in-out hover:bg-[#554CBF]" %>
+  <div class="bg-white p-6 md:p-8 rounded-xl border border-[#EAEFFC] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+    
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-5 mb-6 border-b border-[#EEF0FD]">
+      <div>
+        <h1 class="text-2xl font-semibold text-[#4C4682] tracking-tight m-0">
+          All Pokemon
+        </h1>
+        <p class="text-xs text-[#7973A8] mt-1 m-0">Learn about each Pokemon</p>
+      </div>
+      
+      <%= link_to "+ New Pokemon", new_pokemon_path, class: "inline-flex items-center justify-center h-10 px-4 text-xs font-semibold text-white bg-[#685FD6] rounded-lg hover:bg-[#554CBF] transition-colors no-underline shadow-sm" %>
     </div>
-  </div>
 
-  <div id="pokemons">
-    <% if @pokemons.any? %>
-      <div class="mb-4 overflow-hidden rounded-xl border border-[#EAEFFC] bg-white shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
-        <table class="w-full border-collapse text-left">
-          <thead>
-            <tr>
-              <th class="border-b border-[#EAEFFC] bg-[#F8F9FE] px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#7973A8]">
-                Pokemon Details
-              </th>
-              <th class="border-b border-[#EAEFFC] bg-[#F8F9FE] px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[#7973A8]">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @pokemons.each do |pokemon| %>
-              <tr class="last:[&>td]:border-b-0">
-                <td class="border-b border-[#EAEFFC] px-6 py-4 text-[0.9rem] text-[#2D2B4A]">
-                  <%= render pokemon %>
-                </td>
-                <td class="border-b border-[#EAEFFC] px-6 py-4 text-right text-[0.9rem] text-[#2D2B4A]">
-                  <%= link_to "View Details", pokemon,
-                        class: "inline-block rounded-md bg-[#EEF0FD] px-[0.85rem] py-2 text-[0.8rem] font-medium text-[#685FD6] no-underline transition-all duration-200 ease-in-out hover:bg-[#685FD6] hover:text-white" %>
-                </td>
+    <!-- Table & Content -->
+    <div id="pokemons">
+      <% if @pokemons.any? %>
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-left text-sm">
+            <thead>
+              <tr class="border-b-2 border-[#EEF0FD]">
+                <th class="px-3.5 py-3 font-semibold text-[#7973A8] uppercase text-[0.725rem] tracking-wider">Pokémon</th>
+                <th class="px-3.5 py-3 font-semibold text-[#7973A8] uppercase text-[0.725rem] tracking-wider hidden sm:table-cell">National Dex ID</th>
+                <th class="px-3.5 py-3 text-right font-semibold text-[#7973A8] uppercase text-[0.725rem] tracking-wider">Actions</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody class="divide-y divide-[#F0F2FC]">
+              <% @pokemons.each do |pokemon| %>
+                <tr class="hover:bg-[#FAFBFD] transition-colors duration-150">
+                  
 
-      <div class="px-2 text-right text-sm text-[#7973A8]">
-        Showing <%= @pokemons.count %> pokemon
-      </div>
-    <% else %>
-      <div class="rounded-xl border border-[#EAEFFC] bg-white px-8 py-16 text-center text-[0.95rem] text-[#7973A8] shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
-        <p>No pokemon have been caught yet.</p>
-        <%= link_to "Add First Pokemon", new_pokemon_path,
-              class: "mt-6 box-border inline-block rounded-lg bg-[#685FD6] px-[1.15rem] py-[0.65rem] text-sm font-medium text-white no-underline transition-all duration-200 ease-in-out hover:bg-[#554CBF]" %>
-      </div>
-    <% end %>
+                  <!-- Sprite Thumbnail & Name -->
+                  <td class="px-3.5 py-3.5 align-middle">
+                    <div class="flex items-center gap-3">
+                      <% if pokemon.respond_to?(:sprite_url) && pokemon.sprite_url.present? %>
+                        <div class="w-10 h-10 bg-[#F8F9FE] border border-[#E0E3F6] rounded-lg p-1 flex items-center justify-center shrink-0 shadow-sm">
+                          <img src="<%= pokemon.sprite_url %>" alt="<%= pokemon.name %> sprite" class="w-full h-full object-contain" />
+                        </div>
+                      <% end %>
+                      
+                      <span class="font-semibold text-[#4C4682] capitalize">
+                        <%= pokemon.name %>
+                      </span>
+                    </div>
+                  </td>
+
+                  <!-- Game Index -->
+                  <td class="px-3.5 py-3.5 align-middle hidden sm:table-cell text-xs font-mono text-[#7973A8]">
+                    <%= pokemon.respond_to?(:game_idx) && pokemon.game_idx.present? ? pokemon.game_idx : "-" %>
+                  </td>
+
+                  <!-- View Details Action -->
+                  <td class="px-3.5 py-3.5 align-middle text-right whitespace-nowrap">
+                    <%= link_to "View Details →", pokemon_path(pokemon), class: "inline-flex items-center justify-center h-8 px-3 text-xs font-semibold text-[#685FD6] bg-[#EEF0FD] rounded-md no-underline transition-all duration-200 hover:bg-[#685FD6] hover:text-white" %>
+                  </td>
+
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-4 text-[0.775rem] text-[#8C87B3] text-right m-0">
+          Showing <%= @pokemons.size %> Pokémon
+        </p>
+
+      <% else %>
+        <!-- Empty State -->
+        <div class="p-12 text-center text-[#7973A8] bg-[#F8F9FE] rounded-lg border border-dashed border-[#E0E3F6]">
+          <p class="text-sm m-0 font-medium">No Pokémon have been caught yet.</p>
+          <p class="text-xs text-[#8C87B3] mt-1 mb-4">Add your first Pokémon record to populate the directory.</p>
+          <%= link_to "+ Add First Pokemon", new_pokemon_path, class: "inline-flex items-center justify-center h-9 px-4 text-xs font-semibold text-[#685FD6] bg-[#EEF0FD] border border-[#E0E3F6] rounded-lg hover:bg-[#685FD6] hover:text-white transition-colors no-underline" %>
+        </div>
+      <% end %>
+    </div>
+
   </div>
 </div>
