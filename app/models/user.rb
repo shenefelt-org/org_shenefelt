@@ -2,6 +2,10 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   has_many :sessions, dependent: :destroy
+  has_one :employee_config, dependent: :destroy
+  #establish employee group memberships
+  has_many :memberships, dependent: :destroy
+  has_many :groups, through: :memberships
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
@@ -29,6 +33,15 @@ class User < ApplicationRecord
   end
 
   def admin?
-    user_role == "admin"
+    admin_roles = [ "super admin", "admin", "location admin", "light admin" ]
+    admin_roles.include?(self.employee_config.user_role)
+  end
+
+  def full_name
+    "#{first_name} #{last_Name}"
+  end
+
+  def display
+    "Name: #{first_name} #{last_name}\n User Role: #{self&.employee_config.&user_role}"
   end
 end

@@ -18,5 +18,6 @@ module ApplicationHelper
 
     # use O(n) for now - this needs to be sped up 
     Pokemon.offset(rand(temp)).pluck(:sprite_url)&.first
+    Pokemon.find_by(id: rand(temp))&.sprite_url
   end
 end
