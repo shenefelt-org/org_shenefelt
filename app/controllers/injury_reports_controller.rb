@@ -27,7 +27,7 @@ class InjuryReportsController < ApplicationController
     apply_logged_in_reporter!(@injury_report)
 
     if @injury_report.save
-      InjuryReportMailer.new_report(@injury_report).deliver_now
+      InjuryReportMailer.new_report(@injury_report).deliver_later
       # Use deliver_now if Active Job is not set up:
       # InjuryReportMailer.new_report(@injury_report).deliver_now
 
@@ -64,8 +64,27 @@ class InjuryReportsController < ApplicationController
     user = current_reporter
     return unless user
 
-    report.name = reporter_name(user).presence || report.name
-    report.email = reporter_email(user).presence || report.email
+    # Only overwrite if the helper actually returns a value
+    name_from_user = reporter_name(user)
+    email_from_user = reporter_email(user)
+
+    report.name = name_from_user if name_from_user.present?
+    report.email = email_from_user if email_from_user.present?
+  end
+
+  def reporter_email(user)
+    # Reads directly from User model (supports both standard :email and Rails 8 :email_address)
+    user.try(:email).presence || user.try(:email_address).presence
+  end
+
+  def reporter_name(user)
+    # Pulls name parts from employee_config, falls back to direct user methods
+    config = user.try(:employee_config)
+    first_name = config.try(:first_name) || user.try(:first_name)
+    last_name = config.try(:last_name) || user.try(:last_name)
+
+    full_name = [ first_name, last_name ].compact_blank.join(" ")
+    full_name.presence || user.try(:name).presence
   end
 
   def current_reporter
@@ -73,16 +92,6 @@ class InjuryReportsController < ApplicationController
       (defined?(Current) && Current.respond_to?(:user) && Current.user) ||
       (respond_to?(:current_user, true) && current_user) ||
       nil
-  end
-
-  def reporter_email(user)
-    user.try(:email_address).presence || user.try(:email).presence
-  end
-
-  def reporter_name(user)
-    user.try(:name).presence ||
-      user.try(:full_name).presence ||
-      [user.try(:first_name), user.try(:last_name)].compact.join(" ").presence
   end
 
   def logged_in_reporter?

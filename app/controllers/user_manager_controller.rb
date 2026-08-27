@@ -1,0 +1,2 @@
+class UserManagerController < ApplicationController
+end

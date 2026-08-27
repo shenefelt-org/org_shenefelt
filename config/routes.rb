@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user_managers
 # Injury reports
 resources :injury_reports, only: [ :index, :show, :create ], path: "injury-reports"
 get "report-injury", to: "injury_reports#new", as: :report_injury

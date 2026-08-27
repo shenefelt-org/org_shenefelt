@@ -39,18 +39,21 @@
         <% end %>
 
         <% if logged_in_reporter? %>
-          <%= f.hidden_field :name %>
-          <%= f.hidden_field :email %>
+          <% reporter_name_value = @injury_report.name.presence || reporter_name(current_reporter) %>
+          <% reporter_email_value = @injury_report.email.presence || reporter_email(current_reporter) %>
+
+          <%= f.hidden_field :name, value: reporter_name_value %>
+          <%= f.hidden_field :email, value: reporter_email_value %>
 
           <div class="rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-4 py-3">
             <p class="mb-1 text-xs font-bold uppercase tracking-wide text-[#8C87B3]">
               Reporting as
             </p>
             <p class="m-0 text-sm font-semibold text-[#4C4682]">
-              <%= @injury_report.name.presence || "Signed-in user" %>
+              <%= reporter_name_value.presence || "Signed-in user" %>
             </p>
             <p class="m-0 text-sm font-medium text-[#7973A8]">
-              <%= @injury_report.email %>
+              <%= reporter_email_value.presence || "(No email on file)" %>
             </p>
           </div>
         <% else %>
