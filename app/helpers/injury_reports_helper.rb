@@ -23,4 +23,11 @@ module InjuryReportsHelper
     else "bg-[#F0F2FC] text-[#8C87B3] border-[#EAEFFC]"
     end
   end
+
+  def location_option_label(location)
+    location.try(:display_name).presence || begin
+      company_name = location.company&.name
+      company_name.present? ? "#{location.name} (#{company_name})" : location.name.to_s
+    end
+  end
 end

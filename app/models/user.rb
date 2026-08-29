@@ -1,15 +1,20 @@
-# app/models/user.rb
 class User < ApplicationRecord
   has_secure_password validations: false
   has_many :sessions, dependent: :destroy
-  has_one :employee_config, dependent: :destroy
-  #establish employee group memberships
+
+  has_one  :employee_config, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
+
+  # optional reverse of user_manager records
+  has_many :user_managers, dependent: :nullify
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
   validates :email_address, presence: true, uniqueness: true
+
+  accepts_nested_attributes_for :employee_config, update_only: true
+  accepts_nested_attributes_for :memberships, allow_destroy: true
 
   def self.from_omniauth(auth)
     email = auth.info.email.to_s.strip.downcase
@@ -33,15 +38,15 @@ class User < ApplicationRecord
   end
 
   def admin?
-    admin_roles = [ "super admin", "admin", "location admin", "light admin" ]
-    admin_roles.include?(self.employee_config.user_role)
+    role = employee_config&.user_role.to_s
+    ["super admin", "admin", "location admin", "light admin"].include?(role)
   end
 
   def full_name
-    "#{first_name} #{last_Name}"
+    [first_name, last_name].map { |v| v.to_s.strip.presence }.compact.join(" ").presence
   end
 
   def display
-    "Name: #{first_name} #{last_name}\n User Role: #{self&.employee_config.&user_role}"
+    "Name: #{full_name}\n User Role: #{employee_config&.user_role}"
   end
 end

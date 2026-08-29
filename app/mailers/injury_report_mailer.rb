@@ -4,7 +4,6 @@ class InjuryReportMailer < ApplicationMailer
     @injury_report = injury_report
 
     mail(
-      to: "greg@shenefelt.org", # change to your inbox
       reply_to: @injury_report.email,
       subject: "Injury Report: #{@injury_report.injured_person} (#{@injury_report.severity.presence || 'unspecified'})"
     )

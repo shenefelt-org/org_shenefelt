@@ -1,5 +1,15 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
-  resources :user_managers
+  resources :products
+  resources :order_items
+  resources :orders
+  mount Sidekiq::Web => "/sidekiq"
+  post "checkout/create", to: "checkout#create", as: :checkout_create
+
+  resources :user_managers, path: "user_manager"
+  get "manager/users", to: "user_manager#index"
+  get "manager/users/new", to: "user_manager#new"
 # Injury reports
 resources :injury_reports, only: [ :index, :show, :create ], path: "injury-reports"
 get "report-injury", to: "injury_reports#new", as: :report_injury

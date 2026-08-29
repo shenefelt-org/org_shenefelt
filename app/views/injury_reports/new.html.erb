@@ -99,7 +99,32 @@
 
         <div>
           <%= f.label :location, "Location of incident", class: field_label_classes %>
-          <%= f.text_field :location, required: true, class: field_input_classes, placeholder: "Building, room, job site, etc." %>
+
+          <% if @locations.present? %>
+            <%= f.collection_select :location,
+                  @locations,
+                  :name,
+                  ->(loc) {
+                    company_name = loc.company&.name
+                    company_name.present? ? "#{loc.name} (#{company_name})" : loc.name.to_s
+                  },
+                  { include_blank: "Select location" },
+                  {
+                    required: true,
+                    class: field_input_classes
+                  } %>
+            <p class="mt-1.5 text-xs font-medium text-[#8C87B3]">
+              Choose the site where the incident occurred.
+            </p>
+          <% else %>
+            <%= f.text_field :location,
+                  required: true,
+                  class: field_input_classes,
+                  placeholder: "Building, room, job site, etc." %>
+            <p class="mt-1.5 text-xs font-medium text-[#8C87B3]">
+              No locations are configured yet. Enter the site manually, or add rows in the Locations table.
+            </p>
+          <% end %>
         </div>
 
         <div>

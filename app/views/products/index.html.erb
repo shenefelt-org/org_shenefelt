@@ -1,0 +1,41 @@
+<% content_for :title, "Store - Portfolio" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-12 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[1024px]">
+    
+    <div class="mb-10 text-center">
+      <h1 class="m-0 mb-2 text-3xl font-bold tracking-tight text-[#4C4682]">
+        Portfolio Store
+      </h1>
+      <p class="m-0 text-base font-medium text-[#7973A8]">
+        Premium themes, UI kits, and consulting services.
+      </p>
+    </div>
+
+    <% if flash[:notice].present? %>
+      <div class="mb-8 mx-auto max-w-[640px] rounded-lg border border-[#C7D2FE] bg-[#EEF0FD] px-4 py-3 text-sm font-medium text-[#4C4682] text-center">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <% @products.each do |product| %>
+        <div class="flex flex-col overflow-hidden rounded-xl border border-[#EAEFFC] bg-white shadow-[0_4px_20px_rgba(104,95,214,0.05)] transition-shadow hover:shadow-[0_8px_30px_rgba(104,95,214,0.12)]">
+          <div class="flex flex-1 flex-col p-6">
+            <h2 class="m-0 mb-2 text-xl font-bold text-[#4C4682]">
+              <%= product.title %>
+            </h2>
+            <div class="mb-4 inline-block self-start rounded bg-[#F0F2FC] px-2 py-1 text-sm font-bold text-[#685FD6]">
+              <%= number_to_currency(product.price_in_cents / 100.0) %>
+            </div>
+            <p class="m-0 mb-6 flex-1 text-sm text-[#7973A8] line-clamp-3">
+              <%= product.description %>
+            </p>
+            <%= link_to "View Details", product, class: "block w-full rounded-lg border border-[#EAEFFC] bg-[#FAFBFD] px-4 py-2.5 text-center text-sm font-semibold text-[#4C4682] transition-colors hover:border-[#685FD6] hover:text-[#685FD6]" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

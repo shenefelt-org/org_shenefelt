@@ -5,41 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Injury Report</title>
   </head>
-  <body style="margin:0;padding:0;background-color:#FAFBFD;color:#2D2B4A;font-family:Raleway,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#FAFBFD;margin:0;padding:24px 12px;">
+  <body
+    style="margin:0;padding:0;background-color:#FAFBFD;color:#2D2B4A;font-family:Raleway,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;"
+  >
+    <table
+      role="presentation"
+      width="100%"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      style="background-color:#FAFBFD;margin:0;padding:24px 12px;"
+    >
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:560px;background-color:#FFFFFF;border:1px solid #EAEFFC;border-radius:12px;overflow:hidden;">
+          <table
+            role="presentation"
+            width="100%"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            style="max-width:560px;background-color:#FFFFFF;border:1px solid #EAEFFC;border-radius:12px;overflow:hidden;"
+          >
             <tr>
               <td style="border-bottom:1px solid #EAEFFC;padding:20px 28px;">
-                <p style="margin:0;font-size:18px;font-weight:700;color:#4C4682;">Shenefelt</p>
+                <p style="margin:0;font-size:18px;font-weight:700;color:#4C4682;">button box</p>
               </td>
             </tr>
 
             <tr>
               <td style="padding:28px 28px 8px 28px;">
-                <h1 style="margin:0 0 8px 0;font-size:22px;line-height:1.3;font-weight:700;color:#4C4682;">New Injury Report</h1>
+                <h1
+                  style="margin:0 0 8px 0;font-size:22px;line-height:1.3;font-weight:700;color:#4C4682;"
+                >New Injury Report</h1>
                 <p style="margin:0;font-size:14px;line-height:1.5;color:#7973A8;">A report was submitted on your site.</p>
               </td>
             </tr>
 
             <tr>
               <td style="padding:16px 28px 0 28px;">
-                <span style="display:inline-block;background-color:#F0F2FC;border:1px solid #E0E3F6;border-radius:6px;padding:6px 10px;font-size:12px;font-weight:600;color:#4C4682;">
-                  Severity: <%= @injury_report.severity.presence&.titleize || "Not specified" %>
+                <span
+                  style="display:inline-block;background-color:#F0F2FC;border:1px solid #E0E3F6;border-radius:6px;padding:6px 10px;font-size:12px;font-weight:600;color:#4C4682;"
+                >
+                  Severity:
+                  <%= @injury_report.severity.presence&.titleize || "Not specified" %>
                 </span>
               </td>
             </tr>
 
             <tr>
               <td style="padding:20px 28px 8px 28px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border:1px solid #EAEFFC;border-radius:8px;background-color:#FAFBFD;">
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  style="border:1px solid #EAEFFC;border-radius:8px;background-color:#FAFBFD;"
+                >
                   <tr>
                     <td style="padding:16px 18px;">
-                      <p style="margin:0 0 12px 0;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#8C87B3;">Submitted by</p>
+                      <p
+                        style="margin:0 0 12px 0;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#8C87B3;"
+                      >Submitted by</p>
                       <p style="margin:0 0 4px 0;font-size:14px;font-weight:600;color:#2D2B4A;"><%= @injury_report.name %></p>
                       <p style="margin:0 0 4px 0;font-size:14px;color:#4C4682;">
-                        <a href="mailto:<%= @injury_report.email %>" style="color:#685FD6;text-decoration:none;font-weight:600;"><%= @injury_report.email %></a>
+                        <a
+                          href="mailto:<%= @injury_report.email %>"
+                          style="color:#685FD6;text-decoration:none;font-weight:600;"
+                        ><%= @injury_report.email %></a>
                       </p>
                       <p style="margin:0;font-size:14px;color:#7973A8;"><%= @injury_report.phone.presence || "No phone provided" %></p>
                     </td>
@@ -63,17 +96,24 @@
 
             <tr>
               <td style="padding:8px 28px 28px 28px;">
-                <p style="margin:0 0 8px 0;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#8C87B3;">Description</p>
-                <div style="margin:0;padding:14px 16px;background-color:#EEF0FD;border:1px solid #EAEFFC;border-radius:8px;font-size:14px;line-height:1.6;color:#2D2B4A;">
+                <p
+                  style="margin:0 0 8px 0;font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:#8C87B3;"
+                >Description</p>
+                <div
+                  style="margin:0;padding:14px 16px;background-color:#EEF0FD;border:1px solid #EAEFFC;border-radius:8px;font-size:14px;line-height:1.6;color:#2D2B4A;"
+                >
                   <%= simple_format(@injury_report.description, {}, wrapper_tag: "div") %>
                 </div>
               </td>
             </tr>
 
             <tr>
-              <td style="background-color:#F0F2FC;border-top:1px solid #EAEFFC;padding:16px 28px;">
+              <td
+                style="background-color:#F0F2FC;border-top:1px solid #EAEFFC;padding:16px 28px;"
+              >
                 <p style="margin:0;font-size:12px;line-height:1.5;color:#8C87B3;">
-                  Sent automatically from SHENEFELT.ORG · Reply to contact the submitter
+                  Sent automatically from SHENEFELT.ORG · Reply to contact the
+                  submitter
                 </p>
               </td>
             </tr>

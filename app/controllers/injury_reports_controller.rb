@@ -1,6 +1,7 @@
 class InjuryReportsController < ApplicationController
   before_action :require_reporter_login!, only: [ :index, :show ]
   before_action :set_injury_report, only: [ :show ]
+  before_action :load_locations, only: [ :new, :create ]
 
   def index
     @injury_reports = InjuryReport.order(created_at: :desc)
@@ -20,6 +21,7 @@ class InjuryReportsController < ApplicationController
 
   def new
     @injury_report = InjuryReport.new(default_reporter_attributes)
+    apply_default_location!(@injury_report)
   end
 
   def create
@@ -43,6 +45,17 @@ class InjuryReportsController < ApplicationController
     @injury_report = InjuryReport.find(params[:id])
   end
 
+  def load_locations
+    @locations = Location.includes(:company).order(:name)
+  end
+
+  def apply_default_location!(report)
+    return if report.location.present?
+
+    loc = current_reporter&.try(:employee_config)&.try(:location)
+    report.location = loc.name if loc&.name.present?
+  end
+
   def injury_report_params
     params.require(:injury_report).permit(
       :name, :email, :phone, :injured_person,
@@ -64,7 +77,6 @@ class InjuryReportsController < ApplicationController
     user = current_reporter
     return unless user
 
-    # Only overwrite if the helper actually returns a value
     name_from_user = reporter_name(user)
     email_from_user = reporter_email(user)
 
@@ -73,18 +85,17 @@ class InjuryReportsController < ApplicationController
   end
 
   def reporter_email(user)
-    # Reads directly from User model (supports both standard :email and Rails 8 :email_address)
     user.try(:email).presence || user.try(:email_address).presence
   end
 
   def reporter_name(user)
-    # Pulls name parts from employee_config, falls back to direct user methods
+    # Names live on User; keep config fallbacks for older rows
     config = user.try(:employee_config)
-    first_name = config.try(:first_name) || user.try(:first_name)
-    last_name = config.try(:last_name) || user.try(:last_name)
+    first_name = user.try(:first_name).presence || config.try(:first_name)
+    last_name  = user.try(:last_name).presence  || config.try(:last_name)
 
     full_name = [ first_name, last_name ].compact_blank.join(" ")
-    full_name.presence || user.try(:name).presence
+    full_name.presence || user.try(:name).presence || user.try(:full_name).presence
   end
 
   def current_reporter
@@ -98,7 +109,6 @@ class InjuryReportsController < ApplicationController
     current_reporter.present?
   end
 
-  # Swap for your real auth if needed (admin-only, Pundit, etc.)
   def require_reporter_login!
     return if logged_in_reporter?
 
