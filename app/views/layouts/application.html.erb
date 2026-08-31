@@ -90,28 +90,16 @@
               </div>
             </div>
           <% end %>
-          <!-- Forms Dropdown Menu -->
+
           <% if authenticated? %>
-            <div class="relative group flex items-center h-full cursor-pointer">
-              <span class="text-[#7973A8] group-hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 flex items-center">
-                Forms
-              </span>
-              <svg width="14" height="14" class="w-3.5 h-3.5 ml-1 text-[#7973A8] group-hover:text-[#685FD6] transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-              <div class="absolute left-0 top-full pt-1 hidden group-hover:block z-50">
-                <div class="bg-white border border-[#EAEFFC] rounded-md shadow-lg py-1 min-w-[180px]">
-                  <% active_usr = current_user || Current.user %>
-                  <% is_admin = active_usr.try(:admin?) || (active_usr.try(:role) == "admin") %>
-                  <% target_injury_path = is_admin ? injury_reports_path : report_injury_path %>
-                  <% is_current = (current_page?(target_injury_path) rescue false) %>
-                  <% unless is_current %>
-                    <%= link_to "Injury Reporting", target_injury_path, class: "block px-4 py-2 text-sm text-[#7973A8] hover:text-[#685FD6] hover:bg-[#F0F2FC] font-medium transition-colors duration-200 no-underline" %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
+            <% unless current_page?("/shop") %>
+              <%= link_to "Shop", "/shop", class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+            <% end %>
+            <% unless current_page?(orders_path) %>
+              <%= link_to "Orders", orders_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+            <% end %>
           <% end %>
+
           <% unless current_page?(new_contact_path) %>
             <%= link_to "Contact Me", new_contact_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
           <% end %>
@@ -159,19 +147,19 @@
             <% end %>
           </div>
         <% end %>
-        <!-- Mobile Forms Section -->
+
         <% if authenticated? %>
           <div class="space-y-1">
-            <span class="block text-xs font-bold text-[#8C87B3] uppercase tracking-wider py-1">Forms</span>
-            <% active_usr = current_user || Current.user %>
-            <% is_admin = active_usr.try(:admin?) || (active_usr.try(:role) == "admin") %>
-            <% target_injury_path = is_admin ? injury_reports_path : report_injury_path %>
-            <% is_current = (current_page?(target_injury_path) rescue false) %>
-            <% unless is_current %>
-              <%= link_to "Injury Reporting", target_injury_path, class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
+            <span class="block text-xs font-bold text-[#8C87B3] uppercase tracking-wider py-1">Shop</span>
+            <% unless current_page?("/shop") %>
+              <%= link_to "Shop", "/shop", class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
+            <% end %>
+            <% unless current_page?(orders_path) %>
+              <%= link_to "Orders", orders_path, class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
             <% end %>
           </div>
         <% end %>
+
         <% unless current_page?(new_contact_path) %>
           <%= link_to "Contact Me", new_contact_path, class: "block text-[#7973A8] hover:text-[#685FD6] text-base font-semibold transition-colors duration-200 no-underline py-1" %>
         <% end %>

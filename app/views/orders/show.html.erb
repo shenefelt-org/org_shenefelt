@@ -1,0 +1,31 @@
+<% content_for :title, "Order ##{@order.id} - Portfolio" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-12 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[640px]">
+    <div class="mb-6">
+      <%= link_to "&larr; Back to orders".html_safe, orders_path, class: "text-sm font-medium text-[#7973A8] hover:text-[#4C4682]" %>
+    </div>
+
+    <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+      <h1 class="m-0 mb-2 text-2xl font-bold text-[#4C4682]">Order #<%= @order.id %></h1>
+      <p class="m-0 mb-6 text-sm text-[#7973A8]">Status: <strong><%= @order.status %></strong></p>
+
+      <ul class="m-0 list-none space-y-3 p-0">
+        <% @order.order_items.each do |item| %>
+          <li class="flex items-center justify-between border-b border-[#EAEFFC] pb-3">
+            <div>
+              <p class="m-0 font-semibold text-[#4C4682]"><%= item.product&.title || "Product ##{item.product_id}" %></p>
+              <p class="m-0 text-xs text-[#8C87B3]">Qty <%= item.quantity %></p>
+            </div>
+            <p class="m-0 font-bold text-[#685FD6]"><%= number_to_currency(item.price_at_purchase / 100.0) %></p>
+          </li>
+        <% end %>
+      </ul>
+
+      <div class="mt-6 flex items-center justify-between border-t border-[#EAEFFC] pt-4">
+        <span class="font-semibold text-[#4C4682]">Total</span>
+        <span class="text-xl font-bold text-[#685FD6]"><%= number_to_currency(@order.total_amount / 100.0) %></span>
+      </div>
+    </div>
+  </div>
+</div>

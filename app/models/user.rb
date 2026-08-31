@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password validations: false
   has_many :sessions, dependent: :destroy
+  has_many :orders, dependent: :nullify
 
   has_one  :employee_config, dependent: :destroy
   has_many :memberships, dependent: :destroy

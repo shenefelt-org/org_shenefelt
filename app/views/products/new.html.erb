@@ -32,18 +32,6 @@
           <%= f.text_area :description, rows: 4, required: true, class: "#{input_class} resize-y" %>
         </div>
 
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <%= f.label :stripe_product_id, "Stripe Product ID", class: label_class %>
-            <%= f.text_field :stripe_product_id, class: input_class %>
-          </div>
-
-          <div>
-            <%= f.label :stripe_price_id, "Stripe Price ID", class: label_class %>
-            <%= f.text_field :stripe_price_id, class: input_class %>
-          </div>
-        </div>
-
         <div class="flex items-center gap-3 pt-2">
           <%= f.check_box :active, class: "h-5 w-5 rounded border-[#EAEFFC] text-[#685FD6]" %>
           <%= f.label :active, "Active (Available for purchase)", class: "text-sm font-medium text-[#4C4682] m-0" %>

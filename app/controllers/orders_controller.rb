@@ -1,2 +1,10 @@
 class OrdersController < ApplicationController
+  def index
+    @orders = current_user.orders.includes(:order_items, :products).order(created_at: :desc)
+  end
+
+  def show
+    @order = current_user.orders.includes(:order_items, :products).find(params[:id])
+  end
+  
 end

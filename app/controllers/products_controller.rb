@@ -1,25 +1,40 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  # Store browsing should be public; checkout still requires login
+  allow_unauthenticated_access only: %i[index show]
+
+  before_action :set_product, only: %i[show edit update destroy]
+  before_action :require_admin!, only: %i[new create edit update destroy]
 
   def index
-    # Only show active products to standard visitors
-    @products = Product.where(active: true)
+    @products = Product.active.order(created_at: :desc)
   end
 
   def show
-    # Renders the show.html.erb we built earlier
+    if params[:checkout] == "success" && params[:order_id].present?
+      order = current_user&.orders&.find_by(id: params[:order_id])
+      flash.now[:notice] = if order
+        "Payment received. Order ##{order.id} is being confirmed."
+      else
+        "Payment submitted. You will receive a confirmation shortly."
+      end
+    end
   end
 
   def new
     @product = Product.new
-    # Renders the new.html.erb we built earlier
   end
 
   def create
     @product = Product.new(product_params)
 
     if @product.save
-      redirect_to @product, notice: "Product was successfully created."
+      begin
+        @product.sync_to_stripe!
+        redirect_to @product, notice: "Product was successfully created."
+      rescue Stripe::StripeError => e
+        flash[:alert] = "Product saved, but Stripe integration failed: #{e.message}"
+        redirect_to edit_product_path(@product)
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +52,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    # Instead of deleting, it's safer for order history to just deactivate
+    # Instead of deleting, safer for order history to deactivate
     @product.update(active: false)
     redirect_to products_url, notice: "Product was removed from the store."
   end
@@ -49,6 +64,17 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :description, :price_in_cents, :stripe_product_id, :stripe_price_id, :active)
+    params.require(:product).permit(
+      :title,
+      :description,
+      :price_in_cents,
+      :active
+    )
+  end
+
+  def require_admin!
+    return if current_user&.admin?
+
+    redirect_to products_path, alert: "You are not authorized to manage products."
   end
 end

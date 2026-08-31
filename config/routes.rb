@@ -1,7 +1,8 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  resources :products
+  resources :quotes
+  resources :products, path: "shop"
   resources :order_items
   resources :orders
   mount Sidekiq::Web => "/sidekiq"

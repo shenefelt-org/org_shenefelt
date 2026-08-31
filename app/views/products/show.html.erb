@@ -2,16 +2,28 @@
 
 <div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
   <div class="mx-auto w-full max-w-[640px]">
-    
+
     <div class="mb-6">
-      <%= link_to "&larr; Back to Products".html_safe, products_path, class: "text-sm font-medium text-[#7973A8] hover:text-[#4C4682]" %>
+      <%= link_to "Back to Products".html_safe, products_path, class: "text-sm font-medium text-[#7973A8] hover:text-[#4C4682]" %>
     </div>
 
     <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)] sm:p-10">
-      
-      <% if params[:checkout] == 'canceled' %>
+
+      <% if flash[:notice].present? || params[:checkout] == "success" %>
+        <div class="mb-6 rounded-lg border border-green-300 bg-green-100 px-4 py-3 text-sm font-medium text-green-800">
+          <%= flash[:notice].presence || "Checkout completed successfully. Thank you!" %>
+        </div>
+      <% end %>
+
+      <% if params[:checkout] == "canceled" %>
         <div class="mb-6 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm font-medium text-red-800">
           Checkout was canceled. Your card was not charged.
+        </div>
+      <% end %>
+
+      <% if flash[:alert].present? %>
+        <div class="mb-6 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm font-medium text-red-800">
+          <%= flash[:alert] %>
         </div>
       <% end %>
 
@@ -19,7 +31,7 @@
         <h1 class="m-0 mb-2 text-3xl font-bold tracking-tight text-[#4C4682]">
           <%= @product.title %>
         </h1>
-        
+
         <div class="mb-6 inline-block rounded-lg bg-[#F0F2FC] px-3 py-1.5 text-lg font-bold text-[#685FD6]">
           <%= number_to_currency(@product.price_in_cents / 100.0) %>
         </div>
@@ -31,12 +43,18 @@
 
       <div class="mt-8 border-t border-[#EAEFFC] pt-8">
         <% if @product.active? %>
-          <%= button_to "Buy Now with Stripe", 
-                checkout_create_path(product_id: @product.id), 
-                method: :post, 
-                data: { turbo: false }, 
-                class: "w-full cursor-pointer rounded-lg border-0 bg-[#685FD6] px-4 py-4 text-center text-base font-semibold text-white hover:bg-[#554CBF]" %>
-          
+          <% if authenticated? %>
+            <%= button_to "Buy Now with Stripe",
+                  checkout_create_path(product_id: @product.id),
+                  method: :post,
+                  data: { turbo: false },
+                  class: "w-full cursor-pointer rounded-lg border-0 bg-[#685FD6] px-4 py-4 text-center text-base font-semibold text-white hover:bg-[#554CBF]" %>
+          <% else %>
+            <%= link_to "Sign in to Buy",
+                  new_session_path,
+                  class: "block w-full rounded-lg border-0 bg-[#685FD6] px-4 py-4 text-center text-base font-semibold text-white hover:bg-[#554CBF]" %>
+          <% end %>
+
           <p class="mt-3 text-center text-xs font-medium text-[#8C87B3]">
             Payments are processed securely via Stripe.
           </p>

@@ -1,0 +1,36 @@
+<% content_for :title, "My Orders - Portfolio" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-12 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[800px]">
+    <h1 class="m-0 mb-8 text-3xl font-bold tracking-tight text-[#4C4682]">My Orders</h1>
+
+    <% if @orders.any? %>
+      <div class="space-y-4">
+        <% @orders.each do |order| %>
+          <div class="rounded-xl border border-[#EAEFFC] bg-white p-6 shadow-[0_4px_20px_rgba(104,95,214,0.05)]">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p class="m-0 text-sm font-medium text-[#7973A8]">Order #<%= order.id %></p>
+                <p class="m-0 mt-1 text-lg font-bold text-[#4C4682]">
+                  <%= number_to_currency(order.total_amount / 100.0) %>
+                </p>
+              </div>
+              <div class="text-right">
+                <span class="inline-block rounded-full bg-[#F0F2FC] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#685FD6]">
+                  <%= order.status %>
+                </span>
+                <p class="m-0 mt-2 text-xs text-[#8C87B3]"><%= l(order.created_at, format: :long) rescue order.created_at %></p>
+              </div>
+            </div>
+            <div class="mt-4">
+              <%= link_to "View order", order_path(order), class: "text-sm font-semibold text-[#685FD6] hover:text-[#554CBF]" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-[#7973A8]">You have no orders yet.</p>
+      <%= link_to "Browse products", products_path, class: "mt-4 inline-block font-semibold text-[#685FD6]" %>
+    <% end %>
+  </div>
+</div>
