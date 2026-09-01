@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  quote: one
   product: one
-  billing_type: MyString
+  quantity: 1
+  unit_price: 9.99
 
 two:
+  quote: two
   product: two
-  billing_type: MyString
+  quantity: 1
+  unit_price: 9.99

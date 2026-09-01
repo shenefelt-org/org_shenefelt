@@ -1,5 +1,5 @@
-class Avo::Resources::LineItem < Avo::BaseResource
-  # self.icon = "tabler/outline/users"
+class Avo::Resources::Customer < Avo::BaseResource
+  self.icon = "tabler/outline/user"
   # self.avatar = {
   #   source: :avatar
   # }
@@ -12,9 +12,10 @@ class Avo::Resources::LineItem < Avo::BaseResource
   def fields
     field :id, as: :id
     # field :avatar, as: :avatar
-    field :quote, as: :belongs_to
-    field :product, as: :belongs_to
-    field :quantity, as: :number
-    field :unit_price, as: :number
+    field :name, as: :text
+    field :email, as: :text
+    field :phone, as: :text
+    field :company_name, as: :text
+    field :notes, as: :textarea
   end
 end

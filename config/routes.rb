@@ -1,10 +1,16 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+  get "customers/index"
+  get "customers/show"
+  get "customers/create"
+  get "customers/new"
+  get "customers/destroy"
   resources :quotes
   resources :products, path: "shop"
   resources :order_items
   resources :orders
+  resources :customers, only: [ :index, :show, :new, :create ]
   mount Sidekiq::Web => "/sidekiq"
   post "checkout/create", to: "checkout#create", as: :checkout_create
 

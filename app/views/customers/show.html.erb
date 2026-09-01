@@ -1,0 +1,41 @@
+<% content_for :title, "#{@customer.name} - SHENEFELT.ORG" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[640px]">
+    <div class="mb-4">
+      <%= link_to "← Back to Customers", customers_path, class: "text-xs font-semibold text-[#685FD6] hover:underline" %>
+    </div>
+
+    <% if flash[:notice].present? %>
+      <div class="mb-6 rounded-lg border border-[#C7D2FE] bg-[#EEF0FD] px-4 py-3 text-sm font-medium text-[#4C4682]">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)] sm:p-10">
+      <div class="border-b border-[#EAEFFC] pb-6 mb-6">
+        <h1 class="m-0 text-2xl font-bold text-[#4C4682]"><%= @customer.name %></h1>
+        <p class="m-0 text-sm font-medium text-[#7973A8]"><%= @customer.company_name.presence || "Individual Client" %></p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] p-4">
+          <p class="m-0 text-xs font-bold uppercase text-[#8C87B3]">Email</p>
+          <p class="m-0 mt-1 text-sm font-semibold text-[#4C4682]"><%= @customer.email.presence || "None provided" %></p>
+        </div>
+
+        <div class="rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] p-4">
+          <p class="m-0 text-xs font-bold uppercase text-[#8C87B3]">Phone</p>
+          <p class="m-0 mt-1 text-sm font-semibold text-[#4C4682]"><%= @customer.phone.presence || "None provided" %></p>
+        </div>
+      </div>
+
+      <% if @customer.notes.present? %>
+        <div class="mt-6 rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] p-4">
+          <p class="m-0 text-xs font-bold uppercase text-[#8C87B3]">Notes</p>
+          <p class="m-0 mt-1 text-sm text-[#2D2B4A]"><%= @customer.notes %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

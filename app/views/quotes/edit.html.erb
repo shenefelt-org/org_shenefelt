@@ -1,0 +1,20 @@
+<div class="max-w-[1000px] mx-auto px-6 py-10">
+  <%# Breadcrumb / Back Link %>
+  <div class="mb-6">
+    <%= link_to "← Back to Quote", quote_path(@quote), class: "text-sm font-semibold text-[#7973A8] hover:text-[#685FD6] no-underline transition-colors duration-200 inline-flex items-center gap-1" %>
+  </div>
+
+  <%# Form Card %>
+  <div class="bg-white border border-[#EAEFFC] rounded-lg shadow-[0_4px_20px_rgba(104,95,214,0.05)] overflow-hidden">
+    <div class="px-6 py-5 bg-[#F0F2FC] border-b border-[#EAEFFC]">
+      <h1 class="text-2xl font-bold tracking-tight text-[#4C4682]">
+        Edit Quote <%= @quote.quote_number %>
+      </h1>
+      <p class="text-xs text-[#8C87B3] mt-1">Update the quote details below</p>
+    </div>
+
+    <div class="px-6 py-6">
+      <%= render "form", quote: @quote %>
+    </div>
+  </div>
+</div>

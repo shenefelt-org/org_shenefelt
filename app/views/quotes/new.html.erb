@@ -1,0 +1,68 @@
+<% content_for :title, "New Quote - SHENEFELT.ORG" %>
+
+<div class="min-h-[calc(100vh-4rem)] bg-[#FAFBFD] px-6 py-10 font-sans text-[#2D2B4A]">
+  <div class="mx-auto w-full max-w-[640px]">
+    <div class="rounded-xl border border-[#EAEFFC] bg-white p-8 shadow-[0_4px_20px_rgba(104,95,214,0.05)] sm:p-10">
+      <div class="mb-8 text-center">
+        <h1 class="m-0 mb-1.5 text-2xl font-bold tracking-tight text-[#4C4682]">
+          Create New Quote
+        </h1>
+        <p class="m-0 text-sm font-medium text-[#7973A8]">
+          Enter quote details below to generate a new customer estimate.
+        </p>
+      </div>
+
+      <% if flash[:notice].present? %>
+        <div class="mb-6 rounded-lg border border-[#C7D2FE] bg-[#EEF0FD] px-4 py-3 text-sm font-medium text-[#4C4682]">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <% if flash[:alert].present? %>
+        <div class="mb-6 rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm font-medium text-red-800">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @quote, class: "space-y-5 text-left" do |f| %>
+        <% if @quote.errors.any? %>
+          <div class="rounded-lg border border-red-300 bg-red-100 px-4 py-3 text-sm text-red-800">
+            <p class="mb-2 font-semibold">
+              <%= pluralize(@quote.errors.count, "error") %> prevented this quote from being saved:
+            </p>
+            <ul class="m-0 list-disc space-y-1 pl-5">
+              <% @quote.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div>
+          <%= f.label :quote_number, "Quote number", class: field_label_classes %>
+          <%= f.text_field :quote_number, required: true, class: field_input_classes, placeholder: "QT-2026-001" %>
+        </div>
+
+        <!-- Approved Checkbox Toggle Box -->
+        <div class="rounded-lg border border-[#EAEFFC] bg-[#F0F2FC] px-4 py-3">
+          <label class="flex cursor-pointer items-center justify-between">
+            <div>
+              <span class="block text-sm font-semibold text-[#4C4682]">Mark as Approved</span>
+              <span class="block text-xs font-medium text-[#7973A8]">Check if this quote has already been signed or accepted</span>
+            </div>
+            <%= f.check_box :approved, class: "h-5 w-5 rounded border-[#C7D2FE] text-[#685FD6] focus:ring-[#685FD6] focus:ring-offset-1" %>
+          </label>
+        </div>
+
+        <div class="pt-2">
+          <%= f.submit "Create Quote",
+                class: "w-full cursor-pointer rounded-lg border-0 bg-[#685FD6] px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#554CBF] focus:outline-none focus:ring-2 focus:ring-[#685FD6] focus:ring-offset-2" %>
+        </div>
+      <% end %>
+    </div>
+
+    <p class="mt-6 text-center text-xs font-medium text-[#8C87B3]">
+      Quotes marked as approved can be converted into active work orders immediately.
+    </p>
+  </div>
+</div>

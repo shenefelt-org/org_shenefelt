@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   has_many :order_items, dependent: :restrict_with_exception
   has_many :orders, through: :order_items
+  has_many :line_items
+  has_many :quotes, through: :line_items
 
   validates :title, presence: true
   validates :price_in_cents, presence: true, numericality: { only_integer: true, greater_than: 0 }

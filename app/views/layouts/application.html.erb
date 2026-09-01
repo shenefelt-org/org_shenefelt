@@ -54,6 +54,12 @@
         </button>
         <%# Desktop Menu %>
         <div class="hidden md:flex items-center gap-6 h-full">
+          <% unless current_page?(quotes_path) %>
+            <%= link_to "Quotes", quotes_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+          <% end %>
+          <% unless request.path == "/customers" %>
+            <%= link_to "Customers", "/customers", class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+          <% end %>
           <% unless authenticated? %>
             <% unless current_page?(root_path) %>
               <%= link_to "About Me", root_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
@@ -90,16 +96,14 @@
               </div>
             </div>
           <% end %>
-
           <% if authenticated? %>
-            <% unless current_page?("/shop") %>
+            <% unless request.path == "/shop" %>
               <%= link_to "Shop", "/shop", class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
             <% end %>
-            <% unless current_page?(orders_path) %>
-              <%= link_to "Orders", orders_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
+            <% unless request.path == "/orders" %>
+              <%= link_to "Orders", "/orders", class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
             <% end %>
           <% end %>
-
           <% unless current_page?(new_contact_path) %>
             <%= link_to "Contact Me", new_contact_path, class: "text-[#7973A8] hover:text-[#685FD6] text-sm font-semibold transition-colors duration-200 no-underline flex items-center h-full" %>
           <% end %>
@@ -120,6 +124,12 @@
       </div>
       <%# Mobile Menu Panel %>
       <div class="hidden md:hidden bg-white border-b border-[#EAEFFC] px-6 pt-2 pb-4 space-y-3" id="mobile-menu">
+        <% unless current_page?(quotes_path) %>
+          <%= link_to "Quotes", quotes_path, class: "block text-[#7973A8] hover:text-[#685FD6] text-base font-semibold transition-colors duration-200 no-underline py-1" %>
+        <% end %>
+        <% unless request.path == "/customers" %>
+          <%= link_to "Customers", "/customers", class: "block text-[#7973A8] hover:text-[#685FD6] text-base font-semibold transition-colors duration-200 no-underline py-1" %>
+        <% end %>
         <% unless authenticated? %>
           <% unless current_page?(root_path) %>
             <%= link_to "About Me", root_path, class: "block text-[#7973A8] hover:text-[#685FD6] text-base font-semibold transition-colors duration-200 no-underline py-1" %>
@@ -147,19 +157,17 @@
             <% end %>
           </div>
         <% end %>
-
         <% if authenticated? %>
           <div class="space-y-1">
             <span class="block text-xs font-bold text-[#8C87B3] uppercase tracking-wider py-1">Shop</span>
-            <% unless current_page?("/shop") %>
+            <% unless request.path == "/shop" %>
               <%= link_to "Shop", "/shop", class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
             <% end %>
-            <% unless current_page?(orders_path) %>
-              <%= link_to "Orders", orders_path, class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
+            <% unless request.path == "/orders" %>
+              <%= link_to "Orders", "/orders", class: "block pl-3 py-1 text-sm text-[#7973A8] hover:text-[#685FD6] font-medium no-underline" %>
             <% end %>
           </div>
         <% end %>
-
         <% unless current_page?(new_contact_path) %>
           <%= link_to "Contact Me", new_contact_path, class: "block text-[#7973A8] hover:text-[#685FD6] text-base font-semibold transition-colors duration-200 no-underline py-1" %>
         <% end %>
